@@ -1,0 +1,17 @@
+element : '<LinearLayout' attributes ('>' content '</LinearLayout>' | '/>')
+        ;
+
+attributes : mandatory_attributes optional_attributes?
+           ;
+
+mandatory_attributes : 'android:layout_width' '=' (STRING | POSITIVE_INT) 'android:layout_height' '=' (STRING | POSITIVE_INT)
+                     ;
+
+optional_attributes : ('android:id' '=' STRING)? ('android:orientation' '=' STRING)?
+                    ;
+
+content : line+
+        ;
+
+line : STRING
+     ;
