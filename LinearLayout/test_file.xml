@@ -1,8 +1,16 @@
 <LinearLayout
-    android:layout_width = "hello"
+    android:layout_width = "match_parent"
     android:layout_height = 17
-    android:orientation = "fuck you"
-    android:id= "bitch">
     
+    android:orientation = "ena string"
+    android:id= "yo mama">
+
+    <TextView
+        android:layout_width = "match_parent"
+        android:layout_height = "20"
+        android:text = "dummy text"
+
+        android:id = "TV1"
+        android:textColor = "dummy thick"/>
 
 </LinearLayout>

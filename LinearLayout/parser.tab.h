@@ -49,16 +49,20 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    OPEN_TAG = 258,
+    LIN_LAYOUT_OPEN_TAG = 258,
     GT = 259,
-    CLOSE_OPEN_TAG = 260,
+    LIN_LAYOUT_CLOSE_TAG = 260,
     LAYOUT_WIDTH = 261,
     LAYOUT_HEIGHT = 262,
     ID = 263,
     ORIENTATION = 264,
     EQUAL = 265,
     POSITIVE_INT = 266,
-    STRING = 267
+    STRING = 267,
+    TEXT_OPEN_TAG = 268,
+    TEXT_CLOSE_TAG = 269,
+    TEXT = 270,
+    TEXT_COLOR = 271
   };
 #endif
 
@@ -66,12 +70,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 15 "parser.y"
+#line 16 "parser.y"
 
 	char str[20];
     int pos_int;
 
-#line 75 "parser.tab.h"
+#line 79 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

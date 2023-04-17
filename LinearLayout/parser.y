@@ -8,9 +8,10 @@ void yyerror(const char *);
 FILE *yyin;
 %}
 
-%token OPEN_TAG GT CLOSE_OPEN_TAG
+%token LIN_LAYOUT_OPEN_TAG GT LIN_LAYOUT_CLOSE_TAG
 %token LAYOUT_WIDTH LAYOUT_HEIGHT ID ORIENTATION EQUAL
 %token POSITIVE_INT STRING
+%token TEXT_OPEN_TAG TEXT_CLOSE_TAG TEXT TEXT_COLOR
 
 %union{
 	char str[20];
@@ -20,36 +21,49 @@ FILE *yyin;
 %type <pos_int> POSITIVE_INT
 %type <str> STRING
 
-%start element
+%start layout
 
 %%
 
-element :  OPEN_TAG attributes  GT content CLOSE_OPEN_TAG
+layout :  LIN_LAYOUT_OPEN_TAG lin_layout_attr GT lin_layout_content LIN_LAYOUT_CLOSE_TAG
         ;
 
-attributes : mandatory_attributes optional_attributes
+lin_layout_attr : mandatory_attr lin_layout_opt_attr
            ;
 
-mandatory_attributes : LAYOUT_WIDTH EQUAL STRING LAYOUT_HEIGHT EQUAL STRING
+mandatory_attr : LAYOUT_WIDTH EQUAL STRING LAYOUT_HEIGHT EQUAL STRING
                      | LAYOUT_WIDTH EQUAL STRING LAYOUT_HEIGHT EQUAL POSITIVE_INT
                      | LAYOUT_WIDTH EQUAL POSITIVE_INT LAYOUT_HEIGHT EQUAL STRING
                      | LAYOUT_WIDTH EQUAL POSITIVE_INT LAYOUT_HEIGHT EQUAL POSITIVE_INT
                      ;
 
-optional_attributes : ID EQUAL STRING ORIENTATION EQUAL STRING
+lin_layout_opt_attr : ID EQUAL STRING ORIENTATION EQUAL STRING
                     | ORIENTATION EQUAL STRING ID EQUAL STRING
                     | ID EQUAL STRING
                     | ORIENTATION EQUAL STRING
                     | /* empty */
                     ;
 
-content : line
-        | content line 
+lin_layout_content : element
+                   | lin_layout_content element
+                   | /*empty*/
+                   ;
+
+element : text_view
         ;
 
-line : STRING
-     | /* empty */
-     ;
+text_view : TEXT_OPEN_TAG text_attr TEXT_CLOSE_TAG 
+          ;
+
+text_attr : mandatory_attr TEXT EQUAL STRING text_opt_attr
+          ;
+
+text_opt_attr : ID EQUAL STRING TEXT_COLOR EQUAL STRING
+              | TEXT_COLOR EQUAL STRING ID EQUAL STRING
+              | ID EQUAL STRING
+              | TEXT_COLOR EQUAL STRING
+              | /* empty */
+              ;
 
 %%
 
