@@ -5,39 +5,50 @@
 
 int yylex();
 void yyerror(const char *);
+FILE *yyin;
 %}
+
+%token OPEN_TAG GT CLOSE_OPEN_TAG
+%token LAYOUT_WIDTH LAYOUT_HEIGHT ID ORIENTATION EQUAL
+%token POSITIVE_INT STRING
+
 %union{
 	char str[20];
     int pos_int;
 }
 
-%token T_OPEN_TAG T_CLOSE_TAG T_GT T_CLOSE_OPEN_TAG
-%token T_LAYOUT_WIDTH T_LAYOUT_HEIGHT T_ID T_ORIENTATION T_EQUAL
-%token <pos_int> POSITIVE_INT
-%token <str> STRING
+%type <pos_int> POSITIVE_INT
+%type <str> STRING
 
 %start element
 
 %%
 
-element : T_OPEN_TAG attributes T_GT content T_CLOSE_OPEN_TAG | T_CLOSE_TAG
+element :  OPEN_TAG attributes  GT content CLOSE_OPEN_TAG
         ;
 
-attributes : mandatory_attributes optional_attributes?
+attributes : mandatory_attributes optional_attributes
            ;
 
-mandatory_attributes : T_LAYOUT_WIDTH T_EQUAL (STRING | POSITIVE_INT) T_LAYOUT_HEIGHT T_EQUAL (STRING | POSITIVE_INT)
+mandatory_attributes : LAYOUT_WIDTH EQUAL STRING LAYOUT_HEIGHT EQUAL STRING
+                     | LAYOUT_WIDTH EQUAL STRING LAYOUT_HEIGHT EQUAL POSITIVE_INT
+                     | LAYOUT_WIDTH EQUAL POSITIVE_INT LAYOUT_HEIGHT EQUAL STRING
+                     | LAYOUT_WIDTH EQUAL POSITIVE_INT LAYOUT_HEIGHT EQUAL POSITIVE_INT
                      ;
 
-optional_attributes : T_ID T_EQUAL STRING? T_ORIENTATION T_EQUAL STRING?
-                    | T_ORIENTATION T_EQUAL STRING? T_ID T_EQUAL STRING?
+optional_attributes : ID EQUAL STRING ORIENTATION EQUAL STRING
+                    | ORIENTATION EQUAL STRING ID EQUAL STRING
+                    | ID EQUAL STRING
+                    | ORIENTATION EQUAL STRING
                     | /* empty */
                     ;
 
-content : line+
+content : line
+        | content line 
         ;
 
 line : STRING
+     | /* empty */
      ;
 
 %%
@@ -49,7 +60,7 @@ void yyerror(const char *msg) {
 
 int main(int argc, char **argv) {
     if (argc < 2) {
-        fprintf(stderr, "Usage: %s <input_file>\n", argv[0]);
+        fprintf(stderr, "Usage: %s <inpufile>\n", argv[0]);
         return 1;
     }
 
@@ -62,6 +73,7 @@ int main(int argc, char **argv) {
     yyin = input_file;
 
     yyparse();
+    printf("The file was succesfully parsed\n");
 
     fclose(input_file);
 
