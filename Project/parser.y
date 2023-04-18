@@ -11,7 +11,8 @@ FILE *yyin;
 %token LIN_LAYOUT_OPEN_TAG GT LIN_LAYOUT_CLOSE_TAG
 %token LAYOUT_WIDTH LAYOUT_HEIGHT ID ORIENTATION EQUAL
 %token POSITIVE_INT STRING
-%token TEXT_OPEN_TAG TEXT_CLOSE_TAG TEXT TEXT_COLOR
+%token TEXT_OPEN_TAG CLOSE_TAG TEXT TEXT_COLOR
+%token IMAGE_OPEN_TAG SRC PADDING
 
 %union{
 	char str[20];
@@ -32,10 +33,10 @@ lin_layout_attr : mandatory_attr lin_layout_opt_attr
            ;
 
 mandatory_attr : LAYOUT_WIDTH EQUAL STRING LAYOUT_HEIGHT EQUAL STRING
-                     | LAYOUT_WIDTH EQUAL STRING LAYOUT_HEIGHT EQUAL POSITIVE_INT
-                     | LAYOUT_WIDTH EQUAL POSITIVE_INT LAYOUT_HEIGHT EQUAL STRING
-                     | LAYOUT_WIDTH EQUAL POSITIVE_INT LAYOUT_HEIGHT EQUAL POSITIVE_INT
-                     ;
+               | LAYOUT_WIDTH EQUAL STRING LAYOUT_HEIGHT EQUAL POSITIVE_INT
+               | LAYOUT_WIDTH EQUAL POSITIVE_INT LAYOUT_HEIGHT EQUAL STRING
+               | LAYOUT_WIDTH EQUAL POSITIVE_INT LAYOUT_HEIGHT EQUAL POSITIVE_INT
+               ;
 
 lin_layout_opt_attr : ID EQUAL STRING ORIENTATION EQUAL STRING
                     | ORIENTATION EQUAL STRING ID EQUAL STRING
@@ -49,10 +50,12 @@ lin_layout_content : element
                    | /*empty*/
                    ;
 
-element : text_view
+element : layout 
+        | text_view
+        | image_view
         ;
 
-text_view : TEXT_OPEN_TAG text_attr TEXT_CLOSE_TAG 
+text_view : TEXT_OPEN_TAG text_attr CLOSE_TAG 
           ;
 
 text_attr : mandatory_attr TEXT EQUAL STRING text_opt_attr
@@ -65,6 +68,17 @@ text_opt_attr : ID EQUAL STRING TEXT_COLOR EQUAL STRING
               | /* empty */
               ;
 
+image_view : IMAGE_OPEN_TAG image_attr CLOSE_TAG    
+           ;
+
+image_attr : mandatory_attr SRC EQUAL STRING image_opt_attr
+           ;
+
+image_opt_attr : ID EQUAL STRING PADDING EQUAL POSITIVE_INT
+              | POSITIVE_INT EQUAL POSITIVE_INT ID EQUAL STRING
+              | ID EQUAL STRING
+              | PADDING EQUAL POSITIVE_INT
+              ;
 %%
 
 void yyerror(const char *msg) {
