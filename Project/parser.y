@@ -25,12 +25,14 @@ FILE *yyin;
 %start layout
 
 %%
+layout : lin_layout
+       ;
 
-layout :  LIN_LAYOUT_OPEN_TAG lin_layout_attr GT lin_layout_content LIN_LAYOUT_CLOSE_TAG
-        ;
+lin_layout :  LIN_LAYOUT_OPEN_TAG lin_layout_attr GT lin_layout_content LIN_LAYOUT_CLOSE_TAG
+       ;
 
 lin_layout_attr : mandatory_attr lin_layout_opt_attr
-           ;
+                ;
 
 mandatory_attr : LAYOUT_WIDTH EQUAL STRING LAYOUT_HEIGHT EQUAL STRING
                | LAYOUT_WIDTH EQUAL STRING LAYOUT_HEIGHT EQUAL POSITIVE_INT
@@ -50,7 +52,7 @@ lin_layout_content : element
                    | /*empty*/
                    ;
 
-element : layout 
+element : lin_layout 
         | text_view
         | image_view
         ;

@@ -1,5 +1,5 @@
 <LinearLayout
-    android:layout_width = "match_parent"
+    android:layout_width = "match_parent8989"
     android:layout_height = 17
     
     android:orientation = "ena string"
@@ -35,3 +35,4 @@
         android:padding = 69 />
 
 </LinearLayout>
+
