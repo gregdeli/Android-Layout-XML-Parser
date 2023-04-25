@@ -766,7 +766,7 @@ YY_DECL
 		}
 
 	{
-#line 7 "lexer.l"
+#line 9 "lexer.l"
 
 
 #line 773 "lex.yy.c"
@@ -838,103 +838,103 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 9 "lexer.l"
+#line 11 "lexer.l"
 { return LIN_LAYOUT_OPEN_TAG; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 10 "lexer.l"
+#line 12 "lexer.l"
 { return GT; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 11 "lexer.l"
+#line 13 "lexer.l"
 { return CLOSE_TAG; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 12 "lexer.l"
+#line 14 "lexer.l"
 { return LIN_LAYOUT_CLOSE_TAG; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 13 "lexer.l"
+#line 15 "lexer.l"
 { return LAYOUT_WIDTH; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 14 "lexer.l"
+#line 16 "lexer.l"
 { return LAYOUT_HEIGHT; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 15 "lexer.l"
+#line 17 "lexer.l"
 { return ID; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 16 "lexer.l"
+#line 18 "lexer.l"
 { return ORIENTATION; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 17 "lexer.l"
+#line 19 "lexer.l"
 { return TEXT_OPEN_TAG; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 18 "lexer.l"
+#line 20 "lexer.l"
 { return TEXT; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 19 "lexer.l"
+#line 21 "lexer.l"
 { return TEXT_COLOR; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 20 "lexer.l"
+#line 22 "lexer.l"
 { return IMAGE_OPEN_TAG; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 21 "lexer.l"
+#line 23 "lexer.l"
 { return SRC; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 22 "lexer.l"
+#line 24 "lexer.l"
 { return PADDING; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 23 "lexer.l"
+#line 25 "lexer.l"
 { return EQUAL; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 24 "lexer.l"
+#line 26 "lexer.l"
 { yylval.pos_int = atoi(yytext); return POSITIVE_INT; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 25 "lexer.l"
+#line 27 "lexer.l"
 { sscanf(yytext, "%s", yylval.str); return STRING; }
 	YY_BREAK
 case 18:
 /* rule 18 can match eol */
 YY_RULE_SETUP
-#line 26 "lexer.l"
+#line 28 "lexer.l"
 ; /* ignore whitespace */
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 27 "lexer.l"
+#line 29 "lexer.l"
 { yyerror("Invalid character"); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 30 "lexer.l"
+#line 32 "lexer.l"
 ECHO;
 	YY_BREAK
 #line 941 "lex.yy.c"
@@ -1954,8 +1954,12 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 30 "lexer.l"
+#line 32 "lexer.l"
 
+void yyerror(const char *msg) {
+    fprintf(stderr, "Error: %s\nAt line: %d\n", msg,yylineno);
+    exit(1);
+}
 
 int yywrap(void) {
     return 1;

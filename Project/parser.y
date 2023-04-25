@@ -22,6 +22,8 @@ FILE *yyin;
 %type <pos_int> POSITIVE_INT
 %type <str> STRING
 
+%locations
+
 %start layout
 
 %%
@@ -77,16 +79,11 @@ image_attr : mandatory_attr SRC EQUAL STRING image_opt_attr
            ;
 
 image_opt_attr : ID EQUAL STRING PADDING EQUAL POSITIVE_INT
-              | POSITIVE_INT EQUAL POSITIVE_INT ID EQUAL STRING
+              | PADDING EQUAL POSITIVE_INT ID EQUAL STRING
               | ID EQUAL STRING
               | PADDING EQUAL POSITIVE_INT
               ;
 %%
-
-void yyerror(const char *msg) {
-    fprintf(stderr, "Error: %s\n", msg);
-    exit(1);
-}
 
 int main(int argc, char **argv) {
     if (argc < 2) {
@@ -95,12 +92,21 @@ int main(int argc, char **argv) {
     }
 
     FILE *input_file = fopen(argv[1], "r");
+    char line[100];
     if (!input_file) {
         perror("Failed to open input file");
         return 1;
     }
 
+    // ektypwsi olwn twn grammwn tou input file stin consola
+    while (fgets(line, 100, input_file) != NULL) {
+        printf("%s", line);
+    }
+
+    rewind(input_file); //gia na kanw reset ton file pointer meta tin ektypwsi tou arxeiou
+    
     yyin = input_file;
+    
 
     yyparse();
     printf("The file was succesfully parsed\n");

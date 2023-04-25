@@ -4,6 +4,8 @@
 void yyerror(const char *);
 %}
 
+%option yylineno
+
 %%
 
 "<LinearLayout"    { return LIN_LAYOUT_OPEN_TAG; }
@@ -28,6 +30,10 @@ void yyerror(const char *);
 
 
 %%
+void yyerror(const char *msg) {
+    fprintf(stderr, "Error: %s\nAt line: %d\n", msg,yylineno);
+    exit(1);
+}
 
 int yywrap(void) {
     return 1;
