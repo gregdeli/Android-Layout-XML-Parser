@@ -1,17 +1,18 @@
-element : '<LinearLayout' attributes ('>' content '</LinearLayout>' | '/>')
-        ;
+BNF:
+<layout> ::= <lin_layout> | <rel_layout>
 
-attributes : mandatory_attributes optional_attributes?
-           ;
+<lin_layout> ::=  <LinearLayout <lin_layout_attr> > {<element>} </LinearLayout>
 
-mandatory_attributes : 'android:layout_width' '=' (STRING | POSITIVE_INT) 'android:layout_height' '=' (STRING | POSITIVE_INT)
-                     ;
+<lin_layout_attr> ::= <mandatory_attr> [<lin_layout_opt_attr>]
+                    | [<lin_layout_opt_attr>] <mandatory_attr> 
 
-optional_attributes : ('android:id' '=' STRING)? ('android:orientation' '=' STRING)?
-                    ;
+<mandatory_attr> ::= android:layout_width = (<string>|<pos_int>) android:layout_height = (<string>|<pos_int>) 
+                   | android:layout_height = (<string>|<pos_int>) android:layout_width = (<string>|<pos_int>)
 
-content : line+
-        ;
+<lin_layout_opt_attr> ::= [android:id = <string>] [android:orientation = <string>]
+                        | [android:orientation = <string>] [android:id = <string>]
 
-line : STRING
-     ;
+<element> ::= <lin_layout>
+            | <rel_layout>
+            | <text_view>
+            | <image_view>
