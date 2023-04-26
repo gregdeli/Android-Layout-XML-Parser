@@ -16,18 +16,30 @@ void yyerror(const char *);
 "android:layout_height" { return LAYOUT_HEIGHT; }
 "android:id"            { return ID; }
 "android:orientation" { return ORIENTATION; }
+
+"<RelativeLayout"   {return RE_LAYOUT_OPEN_TAG; }
+"</RelativeLayout>"  { return RE_LAYOUT_CLOSE_TAG; }
+
 "<TextView"          { return TEXT_OPEN_TAG; }
 "android:text"       { return TEXT; }
 "android:textColor"  { return TEXT_COLOR; }
+
 "<ImageView"       { return IMAGE_OPEN_TAG; }
 "android:src"      { return SRC; }
 "android:padding"  { return PADDING; }
+
+"<Button"  { return BUTTON_OPEN_TAG; }
+
+"<RadioGroup"  { return R_GROUP_OPEN_TAG; }
+"</RadioGroup>"  { return R_GROUP_CLOSE_TAG; }
+"<RadioButton"  { return R_BUTTON_OPEN_TAG; }
+"android:checkedButton"  { return CHECKED_BUTTON; }
+
 "="                { return EQUAL; }
 [0-9]+             { yylval.pos_int = atoi(yytext); return POSITIVE_INT; }
 \"[^\"\n]*\"       { sscanf(yytext, "%s", yylval.str); return STRING; }
 [ \t\n\r\f]+       ; /* ignore whitespace */
 .                  { yyerror("Invalid character"); }
-
 
 %%
 void yyerror(const char *msg) {

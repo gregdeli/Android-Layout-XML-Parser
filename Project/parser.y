@@ -8,11 +8,12 @@ void yyerror(const char *);
 FILE *yyin;
 %}
 
-%token LIN_LAYOUT_OPEN_TAG GT LIN_LAYOUT_CLOSE_TAG
+%token LIN_LAYOUT_OPEN_TAG GT LIN_LAYOUT_CLOSE_TAG RE_LAYOUT_OPEN_TAG RE_LAYOUT_CLOSE_TAG
 %token LAYOUT_WIDTH LAYOUT_HEIGHT ID ORIENTATION EQUAL
 %token POSITIVE_INT STRING
 %token TEXT_OPEN_TAG CLOSE_TAG TEXT TEXT_COLOR
 %token IMAGE_OPEN_TAG SRC PADDING
+%token BUTTON_OPEN_TAG R_GROUP_OPEN_TAG R_GROUP_CLOSE_TAG R_BUTTON_OPEN_TAG CHECKED_BUTTON
 
 %union{
 	char str[20];
@@ -28,6 +29,7 @@ FILE *yyin;
 
 %%
 layout : lin_layout
+       | re_layout
        ;
 
 lin_layout :  LIN_LAYOUT_OPEN_TAG lin_layout_attr GT lin_layout_content LIN_LAYOUT_CLOSE_TAG
@@ -54,9 +56,22 @@ lin_layout_content : element
                    | /*empty*/
                    ;
 
+re_layout : RE_LAYOUT_OPEN_TAG re_layout_attr GT lin_layout_content RE_LAYOUT_CLOSE_TAG
+          ;
+
+re_layout_attr : mandatory_attr re_layout_opt_attr
+               ;
+
+re_layout_opt_attr : ID EQUAL STRING
+                   | /* empty */
+                   ;
+
 element : lin_layout 
+        | re_layout
         | text_view
         | image_view
+        | button
+        | radio_group
         ;
 
 text_view : TEXT_OPEN_TAG text_attr CLOSE_TAG 
@@ -75,13 +90,47 @@ text_opt_attr : ID EQUAL STRING TEXT_COLOR EQUAL STRING
 image_view : IMAGE_OPEN_TAG image_attr CLOSE_TAG    
            ;
 
-image_attr : mandatory_attr SRC EQUAL STRING image_opt_attr
+image_attr : mandatory_attr SRC EQUAL STRING image_and_button_opt_attr
            ;
 
-image_opt_attr : ID EQUAL STRING PADDING EQUAL POSITIVE_INT
+image_and_button_opt_attr : ID EQUAL STRING PADDING EQUAL POSITIVE_INT
               | PADDING EQUAL POSITIVE_INT ID EQUAL STRING
               | ID EQUAL STRING
               | PADDING EQUAL POSITIVE_INT
+              | /* empty */
+              ;
+
+button : BUTTON_OPEN_TAG button_attr CLOSE_TAG 
+       ;
+
+button_attr : mandatory_attr TEXT EQUAL STRING image_and_button_opt_attr
+          ;
+
+radio_group : R_GROUP_OPEN_TAG r_group_attr GT r_group_content R_GROUP_CLOSE_TAG    
+           ;
+
+r_group_attr : mandatory_attr r_group_opt_attr
+           ;
+
+r_group_opt_attr : ID EQUAL STRING CHECKED_BUTTON EQUAL STRING
+              | CHECKED_BUTTON EQUAL STRING ID EQUAL STRING
+              | ID EQUAL STRING
+              | CHECKED_BUTTON EQUAL STRING
+              | /* empty */
+              ;
+
+r_group_content : radio_button
+                | r_group_content radio_button
+                ;
+
+radio_button : R_BUTTON_OPEN_TAG radio_button_attr CLOSE_TAG 
+          ;
+
+radio_button_attr : mandatory_attr TEXT EQUAL STRING radio_button_opt_attr
+          ;
+
+radio_button_opt_attr : ID EQUAL STRING
+              | /* empty */
               ;
 %%
 
