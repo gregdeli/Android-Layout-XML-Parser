@@ -5,7 +5,7 @@
 
 int yylex();
 void yyerror(const char *);
-FILE *yyin;
+extern FILE *yyin;
 %}
 
 %token LIN_LAYOUT_OPEN_TAG GT LIN_LAYOUT_CLOSE_TAG RE_LAYOUT_OPEN_TAG RE_LAYOUT_CLOSE_TAG
