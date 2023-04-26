@@ -1,4 +1,5 @@
 BNF:
+
 <layout> ::= <lin_layout> | <rel_layout>
 
 <lin_layout> ::=  '<LinearLayout' <lin_layout_attr> > {<element>} '</LinearLayout>'
@@ -45,7 +46,7 @@ BNF:
 <button> ::= '<Button' <button_attr> '/>'
 
 <button_attr> ::= (<mandatory_attr> 'android:text' = <string> | 'android:text' = <string> <mandatory_attr>) [<button_opt_attr>]
-               | [<button_opt_attr>] (<mandatory_attr> 'android:text' = <string> | 'android:text' = <string> <mandatory_attr>)
+                | [<button_opt_attr>] (<mandatory_attr> 'android:text' = <string> | 'android:text' = <string> <mandatory_attr>)
 
 <button_opt_attr> ::= <image_opt_attr>
 
@@ -63,10 +64,10 @@ BNF:
 <radio_button> ::= '<RadioButton' <radio_button_attr> '/>'
 
 <radio_button_attr> ::= (<mandatory_attr> 'android:text' = <string> | 'android:text' = <string> <mandatory_attr>) [<radio_button_opt_attr>]
-               | [<radio_button_opt_attr>] (<mandatory_attr> 'android:text' = <string> | 'android:text' = <string> <mandatory_attr>)
+                      | [<radio_button_opt_attr>] (<mandatory_attr> 'android:text' = <string> | 'android:text' = <string> <mandatory_attr>)
 
 <radio_button_opt_attr> ::= ['android:id' = <string>] ['android:text' = <string>]
-                      | ['android:text' = <string>] ['android:id' = <string>]  
+                          | ['android:text' = <string>] ['android:id' = <string>]  
 
 <progress_bar> ::= '<ProgressBar' <progress_bar_attr> '/>'
 
@@ -74,6 +75,11 @@ BNF:
                       | [<progr_bar_opt_attr>] <mandatory_attr>
 
 <progr_bar_opt_attr> ::= ['android:id' = <string>] ['android:max' = <pos_int>] ['android:progress' = <pos_int>]
+                       | ['android:id' = <string>] ['android:progress' = <pos_int>] ['android:max' = <pos_int>]
+                       | ['android:max' = <pos_int>] ['android:id' = <string>] ['android:progress' = <pos_int>]
+                       | ['android:max' = <pos_int>] ['android:progress' = <pos_int>] ['android:id' = <string>]
+                       | ['android:progress' = <pos_int>] ['android:id' = <string>] ['android:max' = <pos_int>] 
+                       | ['android:progress' = <pos_int>] ['android:max' = <pos_int>] ['android:id' = <string>]
 
 <comment> ::= '<!--' {(<char> - '-')} '-->'
 
@@ -83,6 +89,6 @@ BNF:
 
 <pos_int> ::= {<digit>}
 
-<digit> ::= '0' | '1' | ... | '9'
+<digit> ::= '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
 
 
