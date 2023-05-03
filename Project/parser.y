@@ -8,13 +8,15 @@ void yyerror(const char *);
 extern FILE *yyin;
 %}
 
-%token LIN_LAYOUT_OPEN_TAG GT LIN_LAYOUT_CLOSE_TAG RE_LAYOUT_OPEN_TAG RE_LAYOUT_CLOSE_TAG
+%token LIN_LAYOUT_OPEN_TAG GT LIN_LAYOUT_CLOSE_TAG 
+%token RE_LAYOUT_OPEN_TAG RE_LAYOUT_CLOSE_TAG
 %token LAYOUT_WIDTH LAYOUT_HEIGHT ID ORIENTATION EQUAL
 %token POSITIVE_INT STRING
 %token TEXT_OPEN_TAG CLOSE_TAG TEXT TEXT_COLOR
 %token IMAGE_OPEN_TAG SRC PADDING
 %token BUTTON_OPEN_TAG R_GROUP_OPEN_TAG R_GROUP_CLOSE_TAG R_BUTTON_OPEN_TAG CHECKED_BUTTON
-
+%token PRO_BAR_OPEN_TAG MAX PROGRESS
+%token COMMENT
 %union{
 	char str[20];
     int pos_int;
@@ -33,7 +35,7 @@ layout : lin_layout
        ;
 
 lin_layout :  LIN_LAYOUT_OPEN_TAG lin_layout_attr GT lin_layout_content LIN_LAYOUT_CLOSE_TAG
-       ;
+           ;
 
 lin_layout_attr : mandatory_attr lin_layout_opt_attr
                 ;
@@ -56,7 +58,7 @@ lin_layout_content : element
                    | /*empty*/
                    ;
 
-re_layout : RE_LAYOUT_OPEN_TAG re_layout_attr GT lin_layout_content RE_LAYOUT_CLOSE_TAG
+re_layout : RE_LAYOUT_OPEN_TAG re_layout_attr GT re_layout_content RE_LAYOUT_CLOSE_TAG
           ;
 
 re_layout_attr : mandatory_attr re_layout_opt_attr
@@ -66,12 +68,19 @@ re_layout_opt_attr : ID EQUAL STRING
                    | /* empty */
                    ;
 
+re_layout_content : element
+                  | re_layout_content element
+                  | /* empty */
+                  ;
+
 element : lin_layout 
         | re_layout
         | text_view
         | image_view
         | button
         | radio_group
+        | pro_bar
+        | COMMENT
         ;
 
 text_view : TEXT_OPEN_TAG text_attr CLOSE_TAG 
@@ -107,10 +116,10 @@ button_attr : mandatory_attr TEXT EQUAL STRING image_and_button_opt_attr
           ;
 
 radio_group : R_GROUP_OPEN_TAG r_group_attr GT r_group_content R_GROUP_CLOSE_TAG    
-           ;
+            ;
 
 r_group_attr : mandatory_attr r_group_opt_attr
-           ;
+             ;
 
 r_group_opt_attr : ID EQUAL STRING CHECKED_BUTTON EQUAL STRING
               | CHECKED_BUTTON EQUAL STRING ID EQUAL STRING
@@ -121,17 +130,45 @@ r_group_opt_attr : ID EQUAL STRING CHECKED_BUTTON EQUAL STRING
 
 r_group_content : radio_button
                 | r_group_content radio_button
+                | COMMENT
                 ;
 
 radio_button : R_BUTTON_OPEN_TAG radio_button_attr CLOSE_TAG 
-          ;
+             ;
 
 radio_button_attr : mandatory_attr TEXT EQUAL STRING radio_button_opt_attr
-          ;
+                  ;
 
 radio_button_opt_attr : ID EQUAL STRING
               | /* empty */
               ;
+
+pro_bar : PRO_BAR_OPEN_TAG pro_bar_attr CLOSE_TAG;
+
+pro_bar_attr: mandatory_attr pro_bar_opt_attr
+            ;
+
+pro_bar_opt_attr: ID EQUAL STRING
+                | MAX EQUAL POSITIVE_INT
+                | PROGRESS EQUAL POSITIVE_INT
+
+                | ID EQUAL STRING MAX EQUAL POSITIVE_INT
+                | MAX EQUAL POSITIVE_INT ID EQUAL STRING
+                | ID EQUAL STRING PROGRESS EQUAL POSITIVE_INT
+                | PROGRESS EQUAL POSITIVE_INT ID EQUAL STRING
+                | MAX EQUAL POSITIVE_INT PROGRESS EQUAL POSITIVE_INT
+                | PROGRESS EQUAL POSITIVE_INT MAX EQUAL POSITIVE_INT
+
+                | ID EQUAL STRING MAX EQUAL POSITIVE_INT PROGRESS EQUAL POSITIVE_INT
+                | ID EQUAL STRING PROGRESS EQUAL POSITIVE_INT MAX EQUAL POSITIVE_INT 
+                | MAX EQUAL POSITIVE_INT ID EQUAL STRING PROGRESS POSITIVE_INT
+                | MAX EQUAL POSITIVE_INT PROGRESS EQUAL POSITIVE_INT ID EQUAL STRING
+                | PROGRESS EQUAL POSITIVE_INT ID EQUAL STRING MAX EQUAL POSITIVE_INT
+                | PROGRESS EQUAL POSITIVE_INT MAX EQUAL POSITIVE_INT ID EQUAL STRING
+                | /* empty */
+                ;
+
+
 %%
 
 int main(int argc, char **argv) {
@@ -158,7 +195,7 @@ int main(int argc, char **argv) {
     
 
     yyparse();
-    printf("The file was succesfully parsed\n");
+    printf("\nThe file was succesfully parsed\n");
 
     fclose(input_file);
 

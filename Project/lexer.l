@@ -8,16 +8,16 @@ void yyerror(const char *);
 
 %%
 
-"<LinearLayout"    { return LIN_LAYOUT_OPEN_TAG; }
-">"                { return GT; }
-"/>"                 { return CLOSE_TAG; }
-"</LinearLayout>"  { return LIN_LAYOUT_CLOSE_TAG; }
+"<LinearLayout"         { return LIN_LAYOUT_OPEN_TAG; }
+">"                     { return GT; }
+"/>"                    { return CLOSE_TAG; }
+"</LinearLayout>"       { return LIN_LAYOUT_CLOSE_TAG; }
 "android:layout_width"  { return LAYOUT_WIDTH; }
 "android:layout_height" { return LAYOUT_HEIGHT; }
 "android:id"            { return ID; }
-"android:orientation" { return ORIENTATION; }
+"android:orientation"   { return ORIENTATION; }
 
-"<RelativeLayout"   {return RE_LAYOUT_OPEN_TAG; }
+"<RelativeLayout"    {return RE_LAYOUT_OPEN_TAG; }
 "</RelativeLayout>"  { return RE_LAYOUT_CLOSE_TAG; }
 
 "<TextView"          { return TEXT_OPEN_TAG; }
@@ -30,10 +30,16 @@ void yyerror(const char *);
 
 "<Button"  { return BUTTON_OPEN_TAG; }
 
-"<RadioGroup"  { return R_GROUP_OPEN_TAG; }
-"</RadioGroup>"  { return R_GROUP_CLOSE_TAG; }
-"<RadioButton"  { return R_BUTTON_OPEN_TAG; }
+"<RadioGroup"            { return R_GROUP_OPEN_TAG; }
+"</RadioGroup>"          { return R_GROUP_CLOSE_TAG; }
+"<RadioButton"           {return R_BUTTON_OPEN_TAG; }
 "android:checkedButton"  { return CHECKED_BUTTON; }
+
+"<ProgressBar"     {return PRO_BAR_OPEN_TAG; }
+"android:max"      {return MAX; }
+"android:progress" {return PROGRESS; }
+
+"<!--"[^-]*(-[^-]+)*"-->" { return COMMENT; }   
 
 "="                { return EQUAL; }
 [0-9]+             { yylval.pos_int = atoi(yytext); return POSITIVE_INT; }

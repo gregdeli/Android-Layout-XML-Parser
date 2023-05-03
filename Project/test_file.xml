@@ -1,15 +1,28 @@
-<RelativeLayout
-        android:layout_width = "333"
-        android:layout_height = "everythingIs gonna Be OK!!!!!!!"
-
-        android:id = "id1">
+<!-- fuck  - you 89 bit-ch -->
 
 <LinearLayout
-    android:layout_width = "match_parent8989"
+    android:layout_width = "hello"
     android:layout_height = 17
     
-    android:orientation = "ena string"
-    android:id= "yo mama">
+    android:orientation = "ena string">
+
+    <!-- fuck  - you 89 bit-ch -->
+
+    <LinearLayout
+        android:layout_width = 666
+        android:layout_height = "match your mom">
+
+        <TextView
+        android:layout_width = "i love nora"
+        android:layout_height = "29"
+        android:text = "dummy thick text"
+
+        android:id = "TV0"
+        android:textColor = "dummy"/>
+        <!-- fuck  - you 89 bit-ch -->
+
+    </LinearLayout>
+
     <TextView
         android:layout_width = "match_parent"
         android:layout_height = "20"
@@ -17,40 +30,6 @@
 
         android:id = "TV1"
         android:textColor = "dummy thick"/>
-    
-        <RadioGroup
-            android:layout_width="wrap_content" 
-            android:layout_height="wrap_content">
-            <RadioButton
-                android:layout_width="wrap_content" 
-                android:layout_height="wrap_content"
-                android:text="Option 1"
-
-                android:id="RB1"
-                />
-            <RadioButton
-            android:layout_width="wrap_content" 
-            android:layout_height="wrap_content"
-            android:text="Option 2"
-
-            android:id="RB2"
-            />
-        </RadioGroup>
-    
-    <RelativeLayout
-        android:layout_width = "333"
-        android:layout_height = "everythingIs gonna Be OK!!!!!!!">
-
-        <TextView
-        android:layout_width = "bbbbbbbb"
-        android:layout_height = "29"
-        android:text = "dummy not thick text"
-
-        android:id = "TV0"
-        android:textColor = "andrew tate"/>
-
-    </RelativeLayout>
-
     <ImageView
         android:layout_width = "match parent"
         android:layout_height = "match your mom"
@@ -59,7 +38,43 @@
         android:id = "id"
         android:padding = 69 />
 
+
+
+    <RelativeLayout
+        android:layout_width = "match_parent666"
+        android:layout_height = 17
+        
+        android:id= "pineapplepen">
+
+        <RelativeLayout
+            android:layout_width = "333"
+            android:layout_height = "everythingIs gonna Be OK!!!!!!!">
+
+            <TextView
+            android:layout_width = "bbbbbbbb"
+            android:layout_height = "29"
+            android:text = "dummy not thick text"
+
+            android:id = "TV0"
+            android:textColor = "andrew tate"/>
+
+        </RelativeLayout>
+ <!--hello i am a - comment -->
+        <TextView
+            android:layout_width = "match_parent"
+            android:layout_height = "20"
+            android:text = "dummy text"
+
+            android:id = "TV1"
+            android:textColor = "dummy thick"/>
+        <ImageView
+            android:layout_width = "match parent"
+            android:layout_height = "match your mom"
+            android:src = "string"
+            
+            android:id = "id"
+            android:padding = 69 />
+
+    </RelativeLayout>
+
 </LinearLayout>
-
-</RelativeLayout>
-

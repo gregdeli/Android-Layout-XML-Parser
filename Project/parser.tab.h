@@ -72,7 +72,11 @@ extern int yydebug;
     R_GROUP_OPEN_TAG = 278,
     R_GROUP_CLOSE_TAG = 279,
     R_BUTTON_OPEN_TAG = 280,
-    CHECKED_BUTTON = 281
+    CHECKED_BUTTON = 281,
+    PRO_BAR_OPEN_TAG = 282,
+    MAX = 283,
+    PROGRESS = 284,
+    COMMENT = 285
   };
 #endif
 
@@ -80,12 +84,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 18 "parser.y"
+#line 20 "parser.y"
 
 	char str[20];
     int pos_int;
 
-#line 89 "parser.tab.h"
+#line 93 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
