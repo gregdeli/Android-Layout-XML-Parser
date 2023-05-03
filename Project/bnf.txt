@@ -25,6 +25,7 @@ BNF:
             | <button>
             | <radio_group>
             | <progress_bar>
+            | <comment>
 
 <text_view> ::= '<TextView' <text_attr> '/>' 
 
@@ -60,6 +61,7 @@ BNF:
 
 <radio_gr_content> ::= <radio_button>
                      | <radio_gr_content> <radio_button>
+                     | <comment>
 
 <radio_button> ::= '<RadioButton' <radio_button_attr> '/>'
 
