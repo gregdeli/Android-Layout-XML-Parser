@@ -1,23 +1,22 @@
-<!-- fuck  - you 89 bit-ch -->
-
 <LinearLayout
     android:layout_width = "hello"
     android:layout_height = 17
     
-    android:orientation = "ena string">
+    android:orientation = "ena string"
+    android:id = "TV0">
 
     <!-- fuck  - you 89 bit-ch -->
 
     <LinearLayout
         android:layout_width = 666
-        android:layout_height = "match your mom">
+        android:layout_height = "matchyourmom">
 
         <TextView
+        android:text = "dummy thick text"
         android:layout_width = "i love nora"
         android:layout_height = "29"
-        android:text = "dummy thick text"
 
-        android:id = "TV0"
+        android:id = "id"
         android:textColor = "dummy"/>
         <!-- fuck  - you 89 bit-ch -->
 
@@ -28,14 +27,13 @@
         android:layout_height = "20"
         android:text = "dummy text"
 
-        android:id = "TV1"
+        android:id = "TV2"
         android:textColor = "dummy thick"/>
     <ImageView
         android:layout_width = "match parent"
         android:layout_height = "match your mom"
         android:src = "string"
         
-        android:id = "id"
         android:padding = 69 />
 
 
@@ -55,7 +53,7 @@
             android:layout_height = "29"
             android:text = "dummy not thick text"
 
-            android:id = "TV0"
+            android:id = "TV3"
             android:textColor = "andrew tate"/>
 
         </RelativeLayout>
@@ -65,14 +63,14 @@
             android:layout_height = "20"
             android:text = "dummy text"
 
-            android:id = "TV1"
+            android:id = "TV4"
             android:textColor = "dummy thick"/>
         <ImageView
             android:layout_width = "match parent"
             android:layout_height = "match your mom"
             android:src = "string"
             
-            android:id = "id"
+            android:id = "TV5"
             android:padding = 69 />
 
     </RelativeLayout>

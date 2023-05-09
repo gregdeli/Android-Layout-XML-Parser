@@ -1,11 +1,19 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 
 int yylex();
 void yyerror(const char *);
 extern FILE *yyin;
+void insert_id(char *str);
+bool check_id(char *str);
+typedef struct node {
+    char *id;
+    struct node *next;
+} Node;
+Node *head = NULL;
 %}
 
 %token LIN_LAYOUT_OPEN_TAG GT LIN_LAYOUT_CLOSE_TAG 
@@ -17,6 +25,7 @@ extern FILE *yyin;
 %token BUTTON_OPEN_TAG R_GROUP_OPEN_TAG R_GROUP_CLOSE_TAG R_BUTTON_OPEN_TAG CHECKED_BUTTON
 %token PRO_BAR_OPEN_TAG MAX PROGRESS
 %token COMMENT
+
 %union{
 	char str[20];
     int pos_int;
@@ -46,12 +55,15 @@ mandatory_attr : LAYOUT_WIDTH EQUAL STRING LAYOUT_HEIGHT EQUAL STRING
                | LAYOUT_WIDTH EQUAL POSITIVE_INT LAYOUT_HEIGHT EQUAL POSITIVE_INT
                ;
 
-lin_layout_opt_attr : ID EQUAL STRING ORIENTATION EQUAL STRING
-                    | ORIENTATION EQUAL STRING ID EQUAL STRING
-                    | ID EQUAL STRING
+lin_layout_opt_attr : id_attr ORIENTATION EQUAL STRING
+                    | ORIENTATION EQUAL STRING id_attr
+                    | id_attr
                     | ORIENTATION EQUAL STRING
                     | /* empty */
                     ;
+
+id_attr : ID EQUAL STRING { insert_id($3); }
+        ;
 
 lin_layout_content : element
                    | lin_layout_content element
@@ -64,7 +76,7 @@ re_layout : RE_LAYOUT_OPEN_TAG re_layout_attr GT re_layout_content RE_LAYOUT_CLO
 re_layout_attr : mandatory_attr re_layout_opt_attr
                ;
 
-re_layout_opt_attr : ID EQUAL STRING
+re_layout_opt_attr : id_attr
                    | /* empty */
                    ;
 
@@ -87,11 +99,12 @@ text_view : TEXT_OPEN_TAG text_attr CLOSE_TAG
           ;
 
 text_attr : mandatory_attr TEXT EQUAL STRING text_opt_attr
+          | TEXT EQUAL STRING mandatory_attr text_opt_attr
           ;
 
-text_opt_attr : ID EQUAL STRING TEXT_COLOR EQUAL STRING
-              | TEXT_COLOR EQUAL STRING ID EQUAL STRING
-              | ID EQUAL STRING
+text_opt_attr : id_attr TEXT_COLOR EQUAL STRING
+              | TEXT_COLOR EQUAL STRING id_attr
+              | id_attr
               | TEXT_COLOR EQUAL STRING
               | /* empty */
               ;
@@ -102,12 +115,12 @@ image_view : IMAGE_OPEN_TAG image_attr CLOSE_TAG
 image_attr : mandatory_attr SRC EQUAL STRING image_and_button_opt_attr
            ;
 
-image_and_button_opt_attr : ID EQUAL STRING PADDING EQUAL POSITIVE_INT
-              | PADDING EQUAL POSITIVE_INT ID EQUAL STRING
-              | ID EQUAL STRING
-              | PADDING EQUAL POSITIVE_INT
-              | /* empty */
-              ;
+image_and_button_opt_attr : id_attr PADDING EQUAL POSITIVE_INT
+                        | PADDING EQUAL POSITIVE_INT id_attr
+                        | id_attr
+                        | PADDING EQUAL POSITIVE_INT
+                        | /* empty */
+                        ;
 
 button : BUTTON_OPEN_TAG button_attr CLOSE_TAG 
        ;
@@ -121,9 +134,9 @@ radio_group : R_GROUP_OPEN_TAG r_group_attr GT r_group_content R_GROUP_CLOSE_TAG
 r_group_attr : mandatory_attr r_group_opt_attr
              ;
 
-r_group_opt_attr : ID EQUAL STRING CHECKED_BUTTON EQUAL STRING
-              | CHECKED_BUTTON EQUAL STRING ID EQUAL STRING
-              | ID EQUAL STRING
+r_group_opt_attr : id_attr CHECKED_BUTTON EQUAL STRING
+              | CHECKED_BUTTON EQUAL STRING id_attr
+              | id_attr
               | CHECKED_BUTTON EQUAL STRING
               | /* empty */
               ;
@@ -139,7 +152,7 @@ radio_button : R_BUTTON_OPEN_TAG radio_button_attr CLOSE_TAG
 radio_button_attr : mandatory_attr TEXT EQUAL STRING radio_button_opt_attr
                   ;
 
-radio_button_opt_attr : ID EQUAL STRING
+radio_button_opt_attr : id_attr
               | /* empty */
               ;
 
@@ -148,28 +161,66 @@ pro_bar : PRO_BAR_OPEN_TAG pro_bar_attr CLOSE_TAG;
 pro_bar_attr: mandatory_attr pro_bar_opt_attr
             ;
 
-pro_bar_opt_attr: ID EQUAL STRING
+pro_bar_opt_attr: id_attr
                 | MAX EQUAL POSITIVE_INT
                 | PROGRESS EQUAL POSITIVE_INT
 
-                | ID EQUAL STRING MAX EQUAL POSITIVE_INT
-                | MAX EQUAL POSITIVE_INT ID EQUAL STRING
-                | ID EQUAL STRING PROGRESS EQUAL POSITIVE_INT
-                | PROGRESS EQUAL POSITIVE_INT ID EQUAL STRING
+                | id_attr MAX EQUAL POSITIVE_INT
+                | MAX EQUAL POSITIVE_INT id_attr
+                | id_attr PROGRESS EQUAL POSITIVE_INT
+                | PROGRESS EQUAL POSITIVE_INT id_attr
                 | MAX EQUAL POSITIVE_INT PROGRESS EQUAL POSITIVE_INT
                 | PROGRESS EQUAL POSITIVE_INT MAX EQUAL POSITIVE_INT
 
-                | ID EQUAL STRING MAX EQUAL POSITIVE_INT PROGRESS EQUAL POSITIVE_INT
-                | ID EQUAL STRING PROGRESS EQUAL POSITIVE_INT MAX EQUAL POSITIVE_INT 
-                | MAX EQUAL POSITIVE_INT ID EQUAL STRING PROGRESS POSITIVE_INT
-                | MAX EQUAL POSITIVE_INT PROGRESS EQUAL POSITIVE_INT ID EQUAL STRING
-                | PROGRESS EQUAL POSITIVE_INT ID EQUAL STRING MAX EQUAL POSITIVE_INT
-                | PROGRESS EQUAL POSITIVE_INT MAX EQUAL POSITIVE_INT ID EQUAL STRING
+                | id_attr MAX EQUAL POSITIVE_INT PROGRESS EQUAL POSITIVE_INT
+                | id_attr PROGRESS EQUAL POSITIVE_INT MAX EQUAL POSITIVE_INT 
+                | MAX EQUAL POSITIVE_INT id_attr PROGRESS POSITIVE_INT
+                | MAX EQUAL POSITIVE_INT PROGRESS EQUAL POSITIVE_INT id_attr
+                | PROGRESS EQUAL POSITIVE_INT id_attr MAX EQUAL POSITIVE_INT
+                | PROGRESS EQUAL POSITIVE_INT MAX EQUAL POSITIVE_INT id_attr
                 | /* empty */
                 ;
 
 
 %%
+
+void insert_id(char *str)
+{
+    //Eisagvgi you id string stin lista
+    Node *newNode = malloc(sizeof(Node));
+    newNode->id = malloc((strlen(str) + 1) * sizeof(char));
+    strcpy(newNode->id, str);
+    newNode->next = head;
+    head = newNode;
+
+    bool id_exists = false;
+    id_exists = check_id(str);
+
+    if(id_exists)
+    {
+        /*char* err_messg;
+        strcpy(err_messg, "An android:id attribute with the value ");
+        strcat(err_messg, str);
+        strcat(err_messg, " already exists");*/
+
+        yyerror("Duplicate android:id"); 
+    }
+}
+
+bool check_id(char *str)
+{
+    bool id_exists = false;
+
+    Node *current = head->next;
+    // diatrexw tin lista kai elegxw an to new id yphrxe
+    while (current != NULL) {
+        if(strcmp(current->id, str)==0)
+            id_exists = true;
+        current = current->next;
+    }
+
+    return id_exists;
+}
 
 int main(int argc, char **argv) {
     if (argc < 2) {
@@ -195,6 +246,15 @@ int main(int argc, char **argv) {
     
 
     yyparse();
+    //del
+    void printList() {
+        Node *current = head;
+        while (current != NULL) {
+            printf("%s\n", current->id);
+            current = current->next;
+        }
+    }
+
     printf("\nThe file was succesfully parsed\n");
 
     fclose(input_file);

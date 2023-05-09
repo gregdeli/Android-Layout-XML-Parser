@@ -5,7 +5,6 @@ BNF:
 <lin_layout> ::=  '<LinearLayout' <lin_layout_attr> > {<element>} '</LinearLayout>'
 
 <lin_layout_attr> ::= <mandatory_attr> [<lin_layout_opt_attr>]
-                    | [<lin_layout_opt_attr>] <mandatory_attr> 
 
 <mandatory_attr> ::= 'android:layout_width' = (<string>|<pos_int>) 'android:layout_height' = (<string>|<pos_int>) 
                    | 'android:layout_height' = (<string>|<pos_int>) 'android:layout_width' = (<string>|<pos_int>)
@@ -15,8 +14,7 @@ BNF:
 
 <rel_layout> ::= '<RelativeLayout' <rel_layout_attr> > {<element>} '</RelativeLayout>'
 
-<rel_layout_attr> ::= <mandatory_attr> ['android:id' = <string>]
-                    | ['android:id' = <string>] <mandatory_attr>                         
+<rel_layout_attr> ::= <mandatory_attr> ['android:id' = <string>]                      
 
 <element> ::= <lin_layout>
             | <rel_layout>
@@ -30,7 +28,6 @@ BNF:
 <text_view> ::= '<TextView' <text_attr> '/>' 
 
 <text_attr> ::= (<mandatory_attr> 'android:text' = <string> | 'android:text' = <string> <mandatory_attr>) [<text_opt_attr>]
-              | [<text_opt_attr>] (<mandatory_attr> 'android:text' = <string> | 'android:text' = <string> <mandatory_attr>)
 
 <text_opt_attr> ::= ['android:id' = <string>] ['android:textColor' = <string>]
                   | ['android:textColor' = <string>] ['android:id' = <string>]
@@ -39,7 +36,6 @@ BNF:
 <image_view> ::= '<ImageView' <image_attr> '/>'   
 
 <image_attr> ::= (<mandatory_attr> 'android:src' = <string> | 'android:src' = <string> <mandatory_attr>) [<image_opt_attr>]
-               | [<image_opt_attr>] (<mandatory_attr> 'android:src' = <string> | 'android:src' = <string> <mandatory_attr>)
 
 <image_opt_attr> ::= ['android:id' = <string>] ['android:padding' = <pos_int>]
                    | ['android:padding' = <pos_int>] ['android:id' = <string>]
@@ -47,14 +43,12 @@ BNF:
 <button> ::= '<Button' <button_attr> '/>'
 
 <button_attr> ::= (<mandatory_attr> 'android:text' = <string> | 'android:text' = <string> <mandatory_attr>) [<button_opt_attr>]
-                | [<button_opt_attr>] (<mandatory_attr> 'android:text' = <string> | 'android:text' = <string> <mandatory_attr>)
 
 <button_opt_attr> ::= <image_opt_attr>
 
 <radio_group> ::= '<RadioGroup' <radio_gr_attr>  <radio_gr_content> '</RadioGroup>'
 
 <radio_gr_attr> ::= <mandatory_attr> [<radio_gr_opt_attr>]
-                  | [<radio_gr_opt_attr>] <mandatory_attr>
                   
 <radio_gr_opt_attr> ::= ['android:id' = <string>] ['android:checkedButton' = <string>]
                       | ['android:checkedButton' = <string>] ['android:id' = <string>]                  
@@ -66,7 +60,6 @@ BNF:
 <radio_button> ::= '<RadioButton' <radio_button_attr> '/>'
 
 <radio_button_attr> ::= (<mandatory_attr> 'android:text' = <string> | 'android:text' = <string> <mandatory_attr>) [<radio_button_opt_attr>]
-                      | [<radio_button_opt_attr>] (<mandatory_attr> 'android:text' = <string> | 'android:text' = <string> <mandatory_attr>)
 
 <radio_button_opt_attr> ::= ['android:id' = <string>] ['android:text' = <string>]
                           | ['android:text' = <string>] ['android:id' = <string>]  
@@ -74,7 +67,6 @@ BNF:
 <progress_bar> ::= '<ProgressBar' <progress_bar_attr> '/>'
 
 <progress_bar_attr> ::= <mandatory_attr> [<progr_bar_opt_attr>]
-                      | [<progr_bar_opt_attr>] <mandatory_attr>
 
 <progr_bar_opt_attr> ::= ['android:id' = <string>] ['android:max' = <pos_int>] ['android:progress' = <pos_int>]
                        | ['android:id' = <string>] ['android:progress' = <pos_int>] ['android:max' = <pos_int>]
