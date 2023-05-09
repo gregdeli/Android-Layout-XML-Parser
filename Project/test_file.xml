@@ -1,5 +1,5 @@
 <LinearLayout
-    android:layout_width = "hello"
+    android:layout_width = "match_parent"
     android:layout_height = 17
     
     android:orientation = "ena string"
@@ -13,7 +13,7 @@
 
         <TextView
         android:text = "dummy thick text"
-        android:layout_width = "i love nora"
+        android:layout_width = "wrap_content"
         android:layout_height = "29"
 
         android:id = "id"
@@ -30,7 +30,7 @@
         android:id = "TV1"
         android:textColor = "dummy thick"/>
     <ImageView
-        android:layout_width = "match parent"
+        android:layout_width = "match_parent"
         android:layout_height = "match your mom"
         android:src = "string"
         
@@ -39,17 +39,17 @@
 
 
     <RelativeLayout
-        android:layout_width = "match_parent666"
+        android:layout_width = "wrap_content"
         android:layout_height = 17
         
         android:id= "pineapplepen">
 
         <RelativeLayout
-            android:layout_width = "333"
+            android:layout_width = "wrap_content"
             android:layout_height = "everythingIs gonna Be OK!!!!!!!">
 
             <TextView
-            android:layout_width = "bbbbbbbb"
+            android:layout_width = "wrap_content"
             android:layout_height = "29"
             android:text = "dummy not thick text"
 
@@ -66,7 +66,7 @@
             android:id = "TV4"
             android:textColor = "dummy thick"/>
         <ImageView
-            android:layout_width = "match parent"
+            android:layout_width = "match_parent"
             android:layout_height = "match your mom"
             android:src = "string"
             

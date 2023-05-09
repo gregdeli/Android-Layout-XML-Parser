@@ -49,10 +49,8 @@ lin_layout :  LIN_LAYOUT_OPEN_TAG lin_layout_attr GT lin_layout_content LIN_LAYO
 lin_layout_attr : mandatory_attr lin_layout_opt_attr
                 ;
 
-mandatory_attr : LAYOUT_WIDTH EQUAL STRING LAYOUT_HEIGHT EQUAL STRING
-               | LAYOUT_WIDTH EQUAL STRING LAYOUT_HEIGHT EQUAL POSITIVE_INT
-               | LAYOUT_WIDTH EQUAL POSITIVE_INT LAYOUT_HEIGHT EQUAL STRING
-               | LAYOUT_WIDTH EQUAL POSITIVE_INT LAYOUT_HEIGHT EQUAL POSITIVE_INT
+mandatory_attr : layout_width_attr layout_heigth_attr
+               | layout_heigth_attr layout_width_attr
                ;
 
 lin_layout_opt_attr : id_attr ORIENTATION EQUAL STRING
@@ -64,6 +62,30 @@ lin_layout_opt_attr : id_attr ORIENTATION EQUAL STRING
 
 id_attr : ID EQUAL STRING { insert_id($3); }
         ;
+
+layout_width_attr: LAYOUT_WIDTH EQUAL STRING {/*
+                                                printf("%s", $3);
+                                                if((strcmp($3, "match_parent") == 0) || (strcmp($3, "wrap_content") == 0)){
+                                                    char err_msg[] = "Invalid android:layout_width ";
+                                                    strcat(err_msg, $3);
+                                                    yyerror(err_msg); 
+                                                }*/
+                                             }
+                  | LAYOUT_WIDTH EQUAL POSITIVE_INT {
+                                                        /*bool valid = false;
+                                                        if($3>=0)
+                                                            valid = true;
+
+                                                        if(!valid)
+                                                        {
+                                                           
+                                                        }*/
+                                                    }
+                 ;
+
+layout_heigth_attr: LAYOUT_HEIGHT EQUAL STRING
+                  | LAYOUT_HEIGHT EQUAL POSITIVE_INT
+                  ;
 
 lin_layout_content : element
                    | lin_layout_content element
@@ -243,14 +265,6 @@ int main(int argc, char **argv) {
     
 
     yyparse();
-    //del
-    void printList() {
-        Node *current = head;
-        while (current != NULL) {
-            printf("%s\n", current->id);
-            current = current->next;
-        }
-    }
 
     printf("\nThe file was succesfully parsed\n");
 
