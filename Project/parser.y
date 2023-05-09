@@ -198,12 +198,9 @@ void insert_id(char *str)
 
     if(id_exists)
     {
-        /*char* err_messg;
-        strcpy(err_messg, "An android:id attribute with the value ");
-        strcat(err_messg, str);
-        strcat(err_messg, " already exists");*/
-
-        yyerror("Duplicate android:id"); 
+        char err_msg[] = "Duplicate android:id ";
+        strcat(err_msg, str);
+        yyerror(err_msg); 
     }
 }
 

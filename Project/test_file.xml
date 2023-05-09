@@ -27,7 +27,7 @@
         android:layout_height = "20"
         android:text = "dummy text"
 
-        android:id = "TV2"
+        android:id = "TV1"
         android:textColor = "dummy thick"/>
     <ImageView
         android:layout_width = "match parent"
