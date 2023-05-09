@@ -63,28 +63,36 @@ lin_layout_opt_attr : id_attr ORIENTATION EQUAL STRING
 id_attr : ID EQUAL STRING { insert_id($3); }
         ;
 
-layout_width_attr: LAYOUT_WIDTH EQUAL STRING {/*
-                                                printf("%s", $3);
-                                                if((strcmp($3, "match_parent") == 0) || (strcmp($3, "wrap_content") == 0)){
-                                                    char err_msg[] = "Invalid android:layout_width ";
-                                                    strcat(err_msg, $3);
-                                                    yyerror(err_msg); 
-                                                }*/
-                                             }
-                  | LAYOUT_WIDTH EQUAL POSITIVE_INT {
-                                                        /*bool valid = false;
-                                                        if($3>=0)
-                                                            valid = true;
+layout_width_attr: LAYOUT_WIDTH EQUAL STRING {
+                        if(!((strcmp($3, "\"match_parent\"") == 0) || (strcmp($3, "\"wrap_content\"") == 0))){
+                        char err_msg[] = "Invalid android:layout_width = ";
+                        strcat(err_msg, $3);
+                        yyerror(err_msg); 
+                        }
+                    }
+                | LAYOUT_WIDTH EQUAL POSITIVE_INT {
+                        if(($3<0)){
+                            char err_msg[] = "Invalid android:layout_width = ";
+                            printf(err_msg, "%d", $3);
+                            yyerror(err_msg); 
+                        }
+                  }
+                ;
 
-                                                        if(!valid)
-                                                        {
-                                                           
-                                                        }*/
-                                                    }
-                 ;
-
-layout_heigth_attr: LAYOUT_HEIGHT EQUAL STRING
-                  | LAYOUT_HEIGHT EQUAL POSITIVE_INT
+layout_heigth_attr: LAYOUT_HEIGHT EQUAL STRING{
+                        if(!((strcmp($3, "\"match_parent\"") == 0) || (strcmp($3, "\"wrap_content\"") == 0))){
+                            char err_msg[] = "Invalid android:layout_height = ";
+                            strcat(err_msg, $3);
+                            yyerror(err_msg); 
+                            }
+                    }
+                  | LAYOUT_HEIGHT EQUAL POSITIVE_INT{
+                        if(($3<0)){
+                            char err_msg[] = "Invalid android:layout_height = ";
+                            printf(err_msg, "%d", $3);
+                            yyerror(err_msg); 
+                        }
+                    }
                   ;
 
 lin_layout_content : element

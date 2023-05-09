@@ -42,7 +42,7 @@ void yyerror(const char *);
 "<!--"[^-]*(-[^-]+)*"-->" { return COMMENT; }   
 
 "="                { return EQUAL; }
-[0-9]+             { yylval.pos_int = atoi(yytext); return POSITIVE_INT; }
+\"[0-9]+\"         { yylval.pos_int = atoi(yytext); return POSITIVE_INT; }
 \"[^\"\n]*\"       { sscanf(yytext, "%s", yylval.str); return STRING; }
 [ \t\n\r\f]+       ; /* ignore whitespace */
 .                  { yyerror("Invalid character"); }
