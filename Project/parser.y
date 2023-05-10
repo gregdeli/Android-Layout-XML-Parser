@@ -122,7 +122,6 @@ element : lin_layout
         | button
         | radio_group
         | pro_bar
-        | COMMENT
         ;
 
 text_view : TEXT_OPEN_TAG text_attr CLOSE_TAG 

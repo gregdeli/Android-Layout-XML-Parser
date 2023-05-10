@@ -39,12 +39,13 @@ void yyerror(const char *);
 "android:max"      {return MAX; }
 "android:progress" {return PROGRESS; }
 
-"<!--"[^-]*(-[^-]+)*"-->" { return COMMENT; }   
+"<!--"[^-]*(-[^-]+)*"-->" /* Ignore comments */  
 
 "="                { return EQUAL; }
 \"[0-9]+\"         { yylval.pos_int = atoi(yytext); return POSITIVE_INT; }
 \"[^\"\n]*\"       { sscanf(yytext, "%s", yylval.str); return STRING; }
-[ \t\n\r\f]+       ; /* ignore whitespace */
+
+[ \t\n\r\f]+       ; /* Ignore whitespace */
 .                  { yyerror("Invalid character"); }
 
 %%

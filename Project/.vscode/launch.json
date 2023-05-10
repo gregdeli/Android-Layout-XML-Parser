@@ -5,11 +5,11 @@
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
-      "args": ["test_file.xml"],
+      "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
       "cwd": "/home/greg/Flex-Bison-Project/Project",
-      "program": "/home/greg/Flex-Bison-Project/Project/xml_parser",
+      "program": "/home/greg/Flex-Bison-Project/Project/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

@@ -1019,7 +1019,7 @@ case 25:
 /* rule 25 can match eol */
 YY_RULE_SETUP
 #line 42 "lexer.l"
-{ return COMMENT; }   
+/* Ignore comments */  
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
@@ -1039,17 +1039,17 @@ YY_RULE_SETUP
 case 29:
 /* rule 29 can match eol */
 YY_RULE_SETUP
-#line 47 "lexer.l"
-; /* ignore whitespace */
+#line 48 "lexer.l"
+; /* Ignore whitespace */
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 48 "lexer.l"
+#line 49 "lexer.l"
 { yyerror("Invalid character"); }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 50 "lexer.l"
+#line 51 "lexer.l"
 ECHO;
 	YY_BREAK
 #line 1056 "lex.yy.c"
@@ -2069,7 +2069,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 50 "lexer.l"
+#line 51 "lexer.l"
 
 void yyerror(const char *msg) {
     fprintf(stderr, "Error: %s\nAt line: %d\n", msg,yylineno);

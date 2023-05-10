@@ -1,5 +1,7 @@
+<!-- comment bitch -->
 <LinearLayout
-    android:layout_width = "match_parent"
+    android:layout_width = "match_parent" 
+    
     android:layout_height = "17"
     
     android:orientation = "ena string"
