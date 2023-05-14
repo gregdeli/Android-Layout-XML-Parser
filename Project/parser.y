@@ -71,6 +71,7 @@ layout_width_attr: LAYOUT_WIDTH EQUAL STRING {
                         }
                     }
                 | LAYOUT_WIDTH EQUAL POSITIVE_INT {
+                        printf("\n%d", $3); //del
                         if(($3<0)){
                             char err_msg[] = "Invalid android:layout_width = ";
                             printf(err_msg, "%d", $3);

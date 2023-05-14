@@ -568,14 +568,14 @@ static const yytype_int8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    42,    42,    43,    46,    49,    52,    53,    56,    57,
-      58,    59,    60,    63,    66,    73,    82,    89,    98,    99,
-     100,   103,   106,   109,   110,   113,   114,   115,   118,   119,
-     120,   121,   122,   123,   124,   127,   130,   131,   134,   135,
-     136,   137,   138,   141,   144,   147,   148,   149,   150,   151,
-     154,   157,   160,   163,   166,   167,   168,   169,   170,   173,
-     174,   175,   178,   181,   184,   185,   188,   190,   193,   194,
-     195,   197,   198,   199,   200,   201,   202,   204,   205,   206,
-     207,   208,   209,   210
+      58,    59,    60,    63,    66,    73,    83,    90,    99,   100,
+     101,   104,   107,   110,   111,   114,   115,   116,   119,   120,
+     121,   122,   123,   124,   125,   128,   131,   132,   135,   136,
+     137,   138,   139,   142,   145,   148,   149,   150,   151,   152,
+     155,   158,   161,   164,   167,   168,   169,   170,   171,   174,
+     175,   176,   179,   182,   185,   186,   189,   191,   194,   195,
+     196,   198,   199,   200,   201,   202,   203,   205,   206,   207,
+     208,   209,   210,   211
 };
 #endif
 
@@ -1596,17 +1596,18 @@ yyreduce:
   case 15:
 #line 73 "parser.y"
                                                   {
+                        printf("\n%d", (yyvsp[0].pos_int)); //del
                         if(((yyvsp[0].pos_int)<0)){
                             char err_msg[] = "Invalid android:layout_width = ";
                             printf(err_msg, "%d", (yyvsp[0].pos_int));
                             yyerror(err_msg); 
                         }
                   }
-#line 1606 "parser.tab.c"
+#line 1607 "parser.tab.c"
     break;
 
   case 16:
-#line 82 "parser.y"
+#line 83 "parser.y"
                                               {
                         if(!((strcmp((yyvsp[0].str), "\"match_parent\"") == 0) || (strcmp((yyvsp[0].str), "\"wrap_content\"") == 0))){
                             char err_msg[] = "Invalid android:layout_height = ";
@@ -1614,11 +1615,11 @@ yyreduce:
                             yyerror(err_msg); 
                             }
                     }
-#line 1618 "parser.tab.c"
+#line 1619 "parser.tab.c"
     break;
 
   case 17:
-#line 89 "parser.y"
+#line 90 "parser.y"
                                                     {
                         if(((yyvsp[0].pos_int)<0)){
                             char err_msg[] = "Invalid android:layout_height = ";
@@ -1626,11 +1627,11 @@ yyreduce:
                             yyerror(err_msg); 
                         }
                     }
-#line 1630 "parser.tab.c"
+#line 1631 "parser.tab.c"
     break;
 
 
-#line 1634 "parser.tab.c"
+#line 1635 "parser.tab.c"
 
       default: break;
     }
@@ -1868,7 +1869,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 214 "parser.y"
+#line 215 "parser.y"
 
 
 void insert_id(char *str)
