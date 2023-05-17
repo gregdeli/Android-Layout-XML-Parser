@@ -65,16 +65,18 @@ id_attr : ID EQUAL STRING { insert_id($3); }
 
 layout_width_attr: LAYOUT_WIDTH EQUAL STRING {
                         if(!((strcmp($3, "\"match_parent\"") == 0) || (strcmp($3, "\"wrap_content\"") == 0))){
-                        char err_msg[] = "Invalid android:layout_width = ";
-                        strcat(err_msg, $3);
-                        yyerror(err_msg); 
+                            char err_msg[] = "Invalid android:layout_width = ";
+                            strcat(err_msg, $3);
+                            yyerror(err_msg); 
                         }
                     }
                 | LAYOUT_WIDTH EQUAL POSITIVE_INT {
-                        printf("\n%d", $3); //del
-                        if(($3<0)){
-                            char err_msg[] = "Invalid android:layout_width = ";
-                            printf(err_msg, "%d", $3);
+                        if(($3<=0)){
+                            char err_msg[] = "Invalid android:layout_width = \"";
+                            char str[20];
+                            sprintf(str, "%d", $3); // Convert pos_int into string
+                            strcat(err_msg, str);
+                            strcat(err_msg, "\"");
                             yyerror(err_msg); 
                         }
                   }
@@ -82,15 +84,18 @@ layout_width_attr: LAYOUT_WIDTH EQUAL STRING {
 
 layout_heigth_attr: LAYOUT_HEIGHT EQUAL STRING{
                         if(!((strcmp($3, "\"match_parent\"") == 0) || (strcmp($3, "\"wrap_content\"") == 0))){
-                            char err_msg[] = "Invalid android:layout_height = ";
+                            char err_msg[] = "Invalid android:layout_height = \"";
                             strcat(err_msg, $3);
                             yyerror(err_msg); 
                             }
                     }
                   | LAYOUT_HEIGHT EQUAL POSITIVE_INT{
-                        if(($3<0)){
-                            char err_msg[] = "Invalid android:layout_height = ";
-                            printf(err_msg, "%d", $3);
+                        if(($3<=0)){
+                            char err_msg[] = "Invalid android:layout_height = \"";
+                            char str[20];
+                            sprintf(str, "%d", $3); // Convert pos_int into string
+                            strcat(err_msg, str);
+                            strcat(err_msg, "\"");
                             yyerror(err_msg); 
                         }
                     }
