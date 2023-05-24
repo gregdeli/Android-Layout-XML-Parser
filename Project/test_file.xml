@@ -1,8 +1,8 @@
 <!-- comment bitch -->
 <LinearLayout
-    android:layout_width = "1" 
+    android:layout_width = "match_parent" 
     
-    android:layout_height = "match_parent"
+    android:layout_height = "17"
     
     android:orientation = "ena string"
     android:id = "TV0">
@@ -10,13 +10,13 @@
     <!-- fuck  - you 89 bit-ch -->
 
     <LinearLayout
-        android:layout_width = "match_parent"
+        android:layout_width = "10"
         android:layout_height = "match_parent">
 
         <TextView
         android:text = "dummy thick text"
         android:layout_width = "wrap_content"
-        android:layout_height = "9"
+        android:layout_height = "29"
 
         android:id = "id"
         android:textColor = "dummy"/>
@@ -76,5 +76,12 @@
             android:padding = "1" />
 
     </RelativeLayout>
+<ProgressBar
+    android:layout_height = "17"
+    android:layout_width = "17"
+
+   android:max = "-6" 
+   android:id = "id8"
+/>
 
 </LinearLayout>

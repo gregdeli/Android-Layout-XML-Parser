@@ -28,6 +28,7 @@ Node *head = NULL;
 
 %union{
 	char str[20];
+    char str2[20];
     int pos_int;
 }
 
@@ -196,25 +197,169 @@ pro_bar : PRO_BAR_OPEN_TAG pro_bar_attr CLOSE_TAG;
 pro_bar_attr: mandatory_attr pro_bar_opt_attr
             ;
 
-pro_bar_opt_attr: id_attr
-                | MAX EQUAL POSITIVE_INT
-                | PROGRESS EQUAL POSITIVE_INT
+pro_bar_opt_attr: id_attr 
+                | max_attr
+                | progress_attr
 
-                | id_attr MAX EQUAL POSITIVE_INT
-                | MAX EQUAL POSITIVE_INT id_attr
-                | id_attr PROGRESS EQUAL POSITIVE_INT
-                | PROGRESS EQUAL POSITIVE_INT id_attr
-                | MAX EQUAL POSITIVE_INT PROGRESS EQUAL POSITIVE_INT
-                | PROGRESS EQUAL POSITIVE_INT MAX EQUAL POSITIVE_INT
+                | id_attr max_attr
+                | max_attr id_attr 
+                | id_attr progress_attr
+                | progress_attr id_attr
+                | max_progress_attr
+                | progress_max_attr 
 
-                | id_attr MAX EQUAL POSITIVE_INT PROGRESS EQUAL POSITIVE_INT
-                | id_attr PROGRESS EQUAL POSITIVE_INT MAX EQUAL POSITIVE_INT 
-                | MAX EQUAL POSITIVE_INT id_attr PROGRESS POSITIVE_INT
-                | MAX EQUAL POSITIVE_INT PROGRESS EQUAL POSITIVE_INT id_attr
-                | PROGRESS EQUAL POSITIVE_INT id_attr MAX EQUAL POSITIVE_INT
-                | PROGRESS EQUAL POSITIVE_INT MAX EQUAL POSITIVE_INT id_attr
+                | all_three_ProgressBar_attr
                 | /* empty */
                 ;
+
+max_attr: MAX EQUAL POSITIVE_INT{
+        printf("\n\n\n\nmax\n"); //del
+        if($3<0){
+                char err_msg[] = "Invalid android:max = \"";
+                            char str[20];
+                            sprintf(str, "%d", $3); // Convert pos_int into string
+                            strcat(err_msg, str);
+                            strcat(err_msg, "\"");
+                            yyerror(err_msg); 
+            }
+}
+;
+
+
+progress_attr: PROGRESS EQUAL POSITIVE_INT{
+            if($3<0){
+                char err_msg[] = "Invalid android:progress = \"";
+                            char str[20];
+                            sprintf(str, "%d", $3); // Convert pos_int into string
+                            strcat(err_msg, str);
+                            strcat(err_msg, "\"");
+                            yyerror(err_msg); 
+            }
+}
+;
+
+max_progress_attr: MAX EQUAL POSITIVE_INT PROGRESS EQUAL POSITIVE_INT{
+                if($6<0){
+                     char err_msg[] = "Invalid android:progress = \"";
+                            char str[20];
+                            sprintf(str, "%d", $6); // Convert pos_int into string
+                            strcat(err_msg, str);
+                            strcat(err_msg, "\"");
+                            yyerror(err_msg); 
+                        }
+                else if($3<$6){
+                    char err_msg[] = "Invalid android:max = \"" ;
+                     char err_msg2[] = " is less than android:progress = \"";
+                            char str[20];
+                            char str2[20];
+                            sprintf(str, "%d", $3); // Convert pos_int into string
+                            sprintf(str2, "%d", $6); // Convert pos_int into string
+                            strcat(err_msg, str);
+                            strcat(err_msg, "\"");
+                            strcat(err_msg2, str2);
+                            strcat(err_msg2, "\"");
+                            strcat(err_msg, err_msg2);
+                            yyerror(err_msg); 
+                }
+                }
+;
+
+
+progress_max_attr: PROGRESS EQUAL POSITIVE_INT MAX EQUAL POSITIVE_INT{
+                if($3<0){
+                     char err_msg[] = "Invalid android:progress = \"";
+                            char str[20];
+                            sprintf(str, "%d", $3); // Convert pos_int into string
+                            strcat(err_msg, str);
+                            strcat(err_msg, "\"");
+                            yyerror(err_msg); 
+                        }
+                else if($6<$3){
+                    char err_msg[] = "Invalid android:max = \"" ;
+                     char err_msg2[] = " is less than android:progress = \"";
+                            char str[20];
+                            char str2[20];
+                            sprintf(str, "%d", $3); // Convert pos_int into string
+                            sprintf(str2, "%d", $6); // Convert pos_int into string
+                            strcat(err_msg, str2);
+                            strcat(err_msg, "\"");
+                            strcat(err_msg2, str);
+                            strcat(err_msg2, "\"");
+                            strcat(err_msg, err_msg2);
+                            yyerror(err_msg); 
+                }
+                }
+;
+
+all_three_ProgressBar_attr: id_attr max_progress_attr
+                          | id_attr progress_max_attr
+                          | max_progress_attr id_attr
+                          | progress_max_attr id_attr
+                          | MAX EQUAL POSITIVE_INT id_attr PROGRESS EQUAL POSITIVE_INT{
+                            if($3<0){
+                                char err_msg[] = "Invalid android:max = \"";
+                                        char str[20];
+                                        sprintf(str, "%d", $3); // Convert pos_int into string
+                                        strcat(err_msg, str);
+                                        strcat(err_msg, "\"");
+                                        yyerror(err_msg); 
+                                    }
+                            else if($7<0){
+                                char err_msg[] = "Invalid android:progress = \"";
+                                        char str[20];
+                                        sprintf(str, "%d", $7); // Convert pos_int into string
+                                        strcat(err_msg, str);
+                                        strcat(err_msg, "\"");
+                                        yyerror(err_msg); 
+                                    }
+                            else if($3<$7){
+                                char err_msg[] = "Invalid android:max = \"" ;
+                                char err_msg2[] = " is less than android:progress = \"";
+                                        char str[20];
+                                        char str2[20];
+                                        sprintf(str, "%d", $3); // Convert pos_int into string
+                                        sprintf(str2, "%d", $7); // Convert pos_int into string
+                                        strcat(err_msg, str);
+                                        strcat(err_msg, "\"");
+                                        strcat(err_msg2, str2);
+                                        strcat(err_msg2, "\"");
+                                        strcat(err_msg, err_msg2);
+                                        yyerror(err_msg); 
+                                        }
+                            }
+                        | PROGRESS EQUAL POSITIVE_INT id_attr MAX EQUAL POSITIVE_INT{
+                            if($7<0){
+                                char err_msg[] = "Invalid android:max = \"";
+                                        char str[20];
+                                        sprintf(str, "%d", $7); // Convert pos_int into string
+                                        strcat(err_msg, str);
+                                        strcat(err_msg, "\"");
+                                        yyerror(err_msg); 
+                                    }
+                            else if($3<0){
+                                char err_msg[] = "Invalid android:progress = \"";
+                                        char str[20];
+                                        sprintf(str, "%d", $3); // Convert pos_int into string
+                                        strcat(err_msg, str);
+                                        strcat(err_msg, "\"");
+                                        yyerror(err_msg); 
+                                    }
+                            else if($3>$7){
+                                char err_msg[] = "Invalid android:max = \"" ;
+                                char err_msg2[] = " is less than android:progress = \"";
+                                        char str[20];
+                                        char str2[20];
+                                        sprintf(str, "%d", $7); // Convert pos_int into string
+                                        sprintf(str2, "%d", $3); // Convert pos_int into string
+                                        strcat(err_msg, str);
+                                        strcat(err_msg, "\"");
+                                        strcat(err_msg2, str2);
+                                        strcat(err_msg2, "\"");
+                                        strcat(err_msg, err_msg2);
+                                        yyerror(err_msg); 
+                                        }
+                            }
+                          ;
 
 
 %%
