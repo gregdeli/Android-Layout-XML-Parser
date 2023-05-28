@@ -35,8 +35,8 @@ void check_rb_num();
 "<Button"  { printf("%s", yytext); return BUTTON_OPEN_TAG; }
 
 "<RadioGroup"            { printf("%s", yytext); return R_GROUP_OPEN_TAG; }
-"</RadioGroup>"          { printf("%s", yytext); return R_GROUP_CLOSE_TAG; }
-"<RadioButton"           { rb_counter++; check_rb_num(); printf("%s", yytext); return R_BUTTON_OPEN_TAG; }
+"</RadioGroup>"          { check_rb_num(); printf("%s", yytext); return R_GROUP_CLOSE_TAG; }
+"<RadioButton"           { rb_counter++; printf("%s", yytext); return R_BUTTON_OPEN_TAG; }
 "android:checkedButton"  { printf("%s", yytext); return CHECKED_BUTTON; }
 "android:rb_number"      { printf("%s", yytext); return RB_NUMBER; }
 

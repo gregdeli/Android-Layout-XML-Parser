@@ -576,10 +576,10 @@ static const yytype_int16 yyrline[] =
      128,   129,   130,   131,   132,   135,   138,   139,   142,   143,
      144,   145,   146,   149,   152,   155,   156,   157,   158,   159,
      162,   165,   168,   171,   174,   177,   178,   179,   180,   181,
-     184,   185,   186,   189,   204,   207,   208,   211,   213,   216,
-     217,   218,   220,   221,   222,   223,   224,   225,   227,   228,
-     231,   243,   254,   267,   279,   306,   332,   333,   334,   335,
-     336,   368
+     184,   185,   186,   189,   193,   196,   197,   200,   202,   205,
+     206,   207,   209,   210,   211,   212,   213,   214,   216,   217,
+     220,   232,   243,   256,   268,   295,   321,   322,   323,   324,
+     325,   357
 };
 #endif
 
@@ -601,7 +601,7 @@ static const char *const yytname[] =
   "re_layout_attr", "re_layout_opt_attr", "re_layout_content", "element",
   "text_view", "text_attr", "text_opt_attr", "image_view", "image_attr",
   "image_and_button_opt_attr", "button", "button_attr", "radio_group",
-  "r_group_attr", "rb_number", "r_group_opt_attr", "r_group_content",
+  "r_group_attr", "rb_number_attr", "r_group_opt_attr", "r_group_content",
   "radio_button", "radio_button_attr", "radio_button_opt_attr", "pro_bar",
   "pro_bar_attr", "pro_bar_opt_attr", "max_id_attr", "progress_id_attr",
   "max_attr", "progress_attr", "max_progress_attr", "progress_max_attr",
@@ -1650,29 +1650,12 @@ yyreduce:
 
   case 54:
 #line 174 "parser.y"
-                                         { rb_number = (yyvsp[0].pos_int); }
+                                              { rb_number = (yyvsp[0].pos_int); }
 #line 1655 "parser.tab.c"
     break;
 
-  case 63:
-#line 189 "parser.y"
-                                                             {
-                   /* rb_counter++;
-                    if(rb_counter>rb_number)
-                        {
-                            char err_msg[] = "Invalid number of RadioButton elements. They should be ";
-                            char str_rb_num[5];
-                            snprintf(str_rb_num, sizeof(str_rb_num), "%d", rb_number);
-                            strcat(err_msg, str_rb_num);
-                            yyerror(err_msg); 
-                        }
-                        */
-                }
-#line 1672 "parser.tab.c"
-    break;
-
   case 80:
-#line 231 "parser.y"
+#line 220 "parser.y"
                                            {
     if((yyvsp[-1].pos_int)<0){
                 char err_msg[] = "Invalid android:max = \"";
@@ -1683,11 +1666,11 @@ yyreduce:
                             yyerror(err_msg); 
             }
 }
-#line 1687 "parser.tab.c"
+#line 1670 "parser.tab.c"
     break;
 
   case 81:
-#line 243 "parser.y"
+#line 232 "parser.y"
                                                      {
     if((yyvsp[-1].pos_int)<0){
                 char err_msg[] = "Invalid android:progress = \"";
@@ -1698,11 +1681,11 @@ yyreduce:
                             yyerror(err_msg); 
             }
 }
-#line 1702 "parser.tab.c"
+#line 1685 "parser.tab.c"
     break;
 
   case 82:
-#line 254 "parser.y"
+#line 243 "parser.y"
                                 {
         if((yyvsp[0].pos_int)<0){
                 char err_msg[] = "Invalid android:max = \"";
@@ -1713,11 +1696,11 @@ yyreduce:
                             yyerror(err_msg); 
             }
 }
-#line 1717 "parser.tab.c"
+#line 1700 "parser.tab.c"
     break;
 
   case 83:
-#line 267 "parser.y"
+#line 256 "parser.y"
                                           {
             if((yyvsp[0].pos_int)<0){
                 char err_msg[] = "Invalid android:progress = \"";
@@ -1728,11 +1711,11 @@ yyreduce:
                             yyerror(err_msg); 
             }
 }
-#line 1732 "parser.tab.c"
+#line 1715 "parser.tab.c"
     break;
 
   case 84:
-#line 279 "parser.y"
+#line 268 "parser.y"
                                                                      {
                 if((yyvsp[0].pos_int)<0){
                      char err_msg[] = "Invalid android:progress = \"";
@@ -1757,11 +1740,11 @@ yyreduce:
                             yyerror(err_msg); 
                 }
                 }
-#line 1761 "parser.tab.c"
+#line 1744 "parser.tab.c"
     break;
 
   case 85:
-#line 306 "parser.y"
+#line 295 "parser.y"
                                                                      {
                 if((yyvsp[-3].pos_int)<0){
                      char err_msg[] = "Invalid android:progress = \"";
@@ -1786,11 +1769,11 @@ yyreduce:
                             yyerror(err_msg); 
                 }
                 }
-#line 1790 "parser.tab.c"
+#line 1773 "parser.tab.c"
     break;
 
   case 90:
-#line 336 "parser.y"
+#line 325 "parser.y"
                                                                                       {
                             if((yyvsp[-4].pos_int)<0){
                                 char err_msg[] = "Invalid android:max = \"";
@@ -1823,11 +1806,11 @@ yyreduce:
                                         yyerror(err_msg); 
                                         }
                             }
-#line 1827 "parser.tab.c"
+#line 1810 "parser.tab.c"
     break;
 
   case 91:
-#line 368 "parser.y"
+#line 357 "parser.y"
                                                                                     {
                             if((yyvsp[0].pos_int)<0){
                                 char err_msg[] = "Invalid android:max = \"";
@@ -1860,11 +1843,11 @@ yyreduce:
                                         yyerror(err_msg); 
                                         }
                             }
-#line 1864 "parser.tab.c"
+#line 1847 "parser.tab.c"
     break;
 
 
-#line 1868 "parser.tab.c"
+#line 1851 "parser.tab.c"
 
       default: break;
     }
@@ -2102,7 +2085,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 403 "parser.y"
+#line 392 "parser.y"
 
 
 void insert_id(char *str)

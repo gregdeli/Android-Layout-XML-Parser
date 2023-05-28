@@ -168,10 +168,10 @@ button_attr : mandatory_attr TEXT EQUAL STRING image_and_button_opt_attr
 radio_group : R_GROUP_OPEN_TAG r_group_attr GT r_group_content R_GROUP_CLOSE_TAG    
             ;
 
-r_group_attr : mandatory_attr rb_number r_group_opt_attr
+r_group_attr : mandatory_attr rb_number_attr r_group_opt_attr
              ;
 
-rb_number : RB_NUMBER EQUAL POSITIVE_INT { rb_number = $3; }
+rb_number_attr : RB_NUMBER EQUAL POSITIVE_INT { rb_number = $3; }
           ;
 
 r_group_opt_attr : id_attr CHECKED_BUTTON EQUAL STRING
@@ -186,18 +186,7 @@ r_group_content : radio_button
                 | COMMENT
                 ;
 
-radio_button : R_BUTTON_OPEN_TAG radio_button_attr CLOSE_TAG {
-                   /* rb_counter++;
-                    if(rb_counter>rb_number)
-                        {
-                            char err_msg[] = "Invalid number of RadioButton elements. They should be ";
-                            char str_rb_num[5];
-                            snprintf(str_rb_num, sizeof(str_rb_num), "%d", rb_number);
-                            strcat(err_msg, str_rb_num);
-                            yyerror(err_msg); 
-                        }
-                        */
-                }
+radio_button : R_BUTTON_OPEN_TAG radio_button_attr CLOSE_TAG 
                 
              ;
 

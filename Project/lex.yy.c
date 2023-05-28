@@ -999,12 +999,12 @@ YY_RULE_SETUP
 case 19:
 YY_RULE_SETUP
 #line 38 "lexer.l"
-{ printf("%s", yytext); return R_GROUP_CLOSE_TAG; }
+{ check_rb_num(); printf("%s", yytext); return R_GROUP_CLOSE_TAG; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
 #line 39 "lexer.l"
-{ rb_counter++; check_rb_num(); printf("%s", yytext); return R_BUTTON_OPEN_TAG; }
+{ rb_counter++; printf("%s", yytext); return R_BUTTON_OPEN_TAG; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
