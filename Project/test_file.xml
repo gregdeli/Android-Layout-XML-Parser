@@ -79,10 +79,9 @@
 <ProgressBar
     android:layout_height = "17"
     android:layout_width = "17"
-    
-    android:progress = "100"
-    android:id = "bla"
-    android:max = "99"
+
+   android:max = "-6" 
+   android:id = "id8"
 />
 
 </LinearLayout>

@@ -87,9 +87,10 @@ union YYSTYPE
 #line 29 "parser.y"
 
 	char str[20];
+    char str2[20];
     int pos_int;
 
-#line 93 "parser.tab.h"
+#line 94 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
