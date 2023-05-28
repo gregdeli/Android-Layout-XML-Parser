@@ -197,12 +197,12 @@ pro_bar : PRO_BAR_OPEN_TAG pro_bar_attr CLOSE_TAG;
 pro_bar_attr: mandatory_attr pro_bar_opt_attr
             ;
 
-pro_bar_opt_attr: id_attr 
+pro_bar_opt_attr: id_attr
                 | max_attr
                 | progress_attr
 
                 | id_attr max_attr
-                | max_attr id_attr 
+                | max_attr id_attr
                 | id_attr progress_attr
                 | progress_attr id_attr
                 | max_progress_attr
@@ -213,7 +213,6 @@ pro_bar_opt_attr: id_attr
                 ;
 
 max_attr: MAX EQUAL POSITIVE_INT{
-        printf("\n\n\n\nmax\n"); //del
         if($3<0){
                 char err_msg[] = "Invalid android:max = \"";
                             char str[20];

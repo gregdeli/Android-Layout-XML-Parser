@@ -80,8 +80,9 @@
     android:layout_height = "17"
     android:layout_width = "17"
 
-   android:max = "-6" 
+   
    android:id = "id8"
+   android:max = "6" 
 />
 
 </LinearLayout>
