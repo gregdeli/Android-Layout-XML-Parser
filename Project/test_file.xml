@@ -9,6 +9,25 @@
 
     <!-- fuck  - you 89 bit-ch -->
 
+    <RadioGroup
+        android:layout_width = "match_parent" 
+        android:layout_height = "17"
+        android:rb_number = "2">
+
+        <RadioButton
+            android:layout_width = "match_parent" 
+            android:layout_height = "17"
+            android:text = "Option1"/>
+        <RadioButton
+            android:layout_width = "match_parent" 
+            android:layout_height = "17"
+            android:text = "Option2"/>
+        <RadioButton
+        android:layout_width = "match_parent" 
+        android:layout_height = "17"
+        android:text = "Option3"/>
+    </RadioGroup>
+
     <LinearLayout
         android:layout_width = "10"
         android:layout_height = "match_parent">

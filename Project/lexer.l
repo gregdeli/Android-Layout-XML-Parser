@@ -3,55 +3,59 @@
 #include "parser.tab.h"
 void yyerror(const char *);
 void remove_quotes(char *);
+extern int rb_number;
+int rb_counter = 0;
+void check_rb_num();
 %}
 
 %option yylineno
 
 %%
 
-"<LinearLayout"         { return LIN_LAYOUT_OPEN_TAG; }
-">"                     { return GT; }
-"/>"                    { return CLOSE_TAG; }
-"</LinearLayout>"       { return LIN_LAYOUT_CLOSE_TAG; }
-"android:layout_width"  { return LAYOUT_WIDTH; }
-"android:layout_height" { return LAYOUT_HEIGHT; }
-"android:id"            { return ID; }
-"android:orientation"   { return ORIENTATION; }
+"<LinearLayout"         { printf("%s", yytext); return LIN_LAYOUT_OPEN_TAG; }
+">"                     { printf("%s", yytext); return GT; }
+"/>"                    { printf("%s", yytext); return CLOSE_TAG; }
+"</LinearLayout>"       { printf("%s", yytext); return LIN_LAYOUT_CLOSE_TAG; }
+"android:layout_width"  { printf("%s", yytext); return LAYOUT_WIDTH; }
+"android:layout_height" { printf("%s", yytext); return LAYOUT_HEIGHT; }
+"android:id"            { printf("%s", yytext); return ID; }
+"android:orientation"   { printf("%s", yytext); return ORIENTATION; }
 
-"<RelativeLayout"    {return RE_LAYOUT_OPEN_TAG; }
-"</RelativeLayout>"  { return RE_LAYOUT_CLOSE_TAG; }
+"<RelativeLayout"    { printf("%s", yytext); return RE_LAYOUT_OPEN_TAG; }
+"</RelativeLayout>"  { printf("%s", yytext); return RE_LAYOUT_CLOSE_TAG; }
 
-"<TextView"          { return TEXT_OPEN_TAG; }
-"android:text"       { return TEXT; }
-"android:textColor"  { return TEXT_COLOR; }
+"<TextView"          { printf("%s", yytext); return TEXT_OPEN_TAG; }
+"android:text"       { printf("%s", yytext); return TEXT; }
+"android:textColor"  { printf("%s", yytext); return TEXT_COLOR; }
 
-"<ImageView"       { return IMAGE_OPEN_TAG; }
-"android:src"      { return SRC; }
-"android:padding"  { return PADDING; }
+"<ImageView"       { printf("%s", yytext); return IMAGE_OPEN_TAG; }
+"android:src"      { printf("%s", yytext); return SRC; }
+"android:padding"  { printf("%s", yytext); return PADDING; }
 
-"<Button"  { return BUTTON_OPEN_TAG; }
+"<Button"  { printf("%s", yytext); return BUTTON_OPEN_TAG; }
 
-"<RadioGroup"            { return R_GROUP_OPEN_TAG; }
-"</RadioGroup>"          { return R_GROUP_CLOSE_TAG; }
-"<RadioButton"           {return R_BUTTON_OPEN_TAG; }
-"android:checkedButton"  { return CHECKED_BUTTON; }
+"<RadioGroup"            { printf("%s", yytext); return R_GROUP_OPEN_TAG; }
+"</RadioGroup>"          { printf("%s", yytext); return R_GROUP_CLOSE_TAG; }
+"<RadioButton"           { rb_counter++; check_rb_num(); printf("%s", yytext); return R_BUTTON_OPEN_TAG; }
+"android:checkedButton"  { printf("%s", yytext); return CHECKED_BUTTON; }
+"android:rb_number"      { printf("%s", yytext); return RB_NUMBER; }
 
-"<ProgressBar"     {return PRO_BAR_OPEN_TAG; }
-"android:max"      {return MAX; }
-"android:progress" {return PROGRESS; }
+"<ProgressBar"     { printf("%s", yytext); return PRO_BAR_OPEN_TAG; }
+"android:max"      { printf("%s", yytext); return MAX; }
+"android:progress" { printf("%s", yytext); return PROGRESS; }
 
-"<!--"[^-]*(-[^-]+)*"-->" /* Ignore comments */  
+"<!--"[^-]*(-[^-]+)*"-->" { printf("%s", yytext); /* Ignore comments */ }  
 
-"="                { return EQUAL; }
-\"-?[0-9]+\"         { remove_quotes(yytext); yylval.pos_int = atoi(yytext); return POSITIVE_INT; }
-\"[^\"\n]*\"       { /*printf("%s\n", yytext);*/ sscanf(yytext, "%s", yylval.str); return STRING; }
+"="                { printf("%s", yytext); return EQUAL; }
+\"-?[0-9]+\"         { printf("%s", yytext); remove_quotes(yytext); yylval.pos_int = atoi(yytext); return POSITIVE_INT; }
+\"[^\"\n]*\"       { printf("%s", yytext); sscanf(yytext, "%s", yylval.str); return STRING; }
 
-[ \t\n\r\f]+       ; /* Ignore whitespace */
+[ \t\n\r\f]+       { printf("%s", yytext); /* Ignore whitespace */ } 
 .                  { yyerror("Invalid character"); }
 
 %%
 void yyerror(const char *msg) {
-    fprintf(stderr, "Error: %s\nAt line: %d\n", msg,yylineno);
+    fprintf(stderr, "\nError: %s\nAt line: %d\n", msg,yylineno);
     exit(1);
 }
 
@@ -67,6 +71,17 @@ void remove_quotes(char* str) {
         
         // Afairesi tou teliko quote thetontas stin thesi tou ton termatiko xaraktira
         str[length - 2] = '\0';
+    }
+}
+
+void check_rb_num(){
+    if(rb_counter>rb_number)
+    {
+        char err_msg[] = "Invalid number of RadioButton elements. They should be ";
+        char str_rb_num[5];
+        snprintf(str_rb_num, sizeof(str_rb_num), "%d", rb_number);
+        strcat(err_msg, str_rb_num);
+        yyerror(err_msg); 
     }
 }
 

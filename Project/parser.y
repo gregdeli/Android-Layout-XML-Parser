@@ -14,6 +14,7 @@ typedef struct node {
     struct node *next;
 } Node;
 Node *head = NULL;
+int rb_number;
 %}
 
 %token LIN_LAYOUT_OPEN_TAG GT LIN_LAYOUT_CLOSE_TAG 
@@ -22,7 +23,7 @@ Node *head = NULL;
 %token POSITIVE_INT STRING
 %token TEXT_OPEN_TAG CLOSE_TAG TEXT TEXT_COLOR
 %token IMAGE_OPEN_TAG SRC PADDING
-%token BUTTON_OPEN_TAG R_GROUP_OPEN_TAG R_GROUP_CLOSE_TAG R_BUTTON_OPEN_TAG CHECKED_BUTTON
+%token BUTTON_OPEN_TAG R_GROUP_OPEN_TAG R_GROUP_CLOSE_TAG R_BUTTON_OPEN_TAG CHECKED_BUTTON RB_NUMBER
 %token PRO_BAR_OPEN_TAG MAX PROGRESS
 %token COMMENT
 
@@ -167,22 +168,37 @@ button_attr : mandatory_attr TEXT EQUAL STRING image_and_button_opt_attr
 radio_group : R_GROUP_OPEN_TAG r_group_attr GT r_group_content R_GROUP_CLOSE_TAG    
             ;
 
-r_group_attr : mandatory_attr r_group_opt_attr
+r_group_attr : mandatory_attr rb_number r_group_opt_attr
              ;
 
+rb_number : RB_NUMBER EQUAL POSITIVE_INT { rb_number = $3; }
+          ;
+
 r_group_opt_attr : id_attr CHECKED_BUTTON EQUAL STRING
-              | CHECKED_BUTTON EQUAL STRING id_attr
-              | id_attr
-              | CHECKED_BUTTON EQUAL STRING
-              | /* empty */
-              ;
+                | CHECKED_BUTTON EQUAL STRING id_attr
+                | id_attr
+                | CHECKED_BUTTON EQUAL STRING
+                | /* empty */
+                ;
 
 r_group_content : radio_button
                 | r_group_content radio_button
                 | COMMENT
                 ;
 
-radio_button : R_BUTTON_OPEN_TAG radio_button_attr CLOSE_TAG 
+radio_button : R_BUTTON_OPEN_TAG radio_button_attr CLOSE_TAG {
+                   /* rb_counter++;
+                    if(rb_counter>rb_number)
+                        {
+                            char err_msg[] = "Invalid number of RadioButton elements. They should be ";
+                            char str_rb_num[5];
+                            snprintf(str_rb_num, sizeof(str_rb_num), "%d", rb_number);
+                            strcat(err_msg, str_rb_num);
+                            yyerror(err_msg); 
+                        }
+                        */
+                }
+                
              ;
 
 radio_button_attr : mandatory_attr TEXT EQUAL STRING radio_button_opt_attr
@@ -433,20 +449,20 @@ int main(int argc, char **argv) {
         perror("Failed to open input file");
         return 1;
     }
-
+    /* delete
     // ektypwsi olwn twn grammwn tou input file stin consola
     while (fgets(line, 100, input_file) != NULL) {
         printf("%s", line);
     }
 
     rewind(input_file); //gia na kanw reset ton file pointer meta tin ektypwsi tou arxeiou
-    
+    */
     yyin = input_file;
     
 
     yyparse();
 
-    printf("\nThe file was succesfully parsed\n");
+    printf("\n\nThe file was succesfully parsed\n");
 
     fclose(input_file);
 
