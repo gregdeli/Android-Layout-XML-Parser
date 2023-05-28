@@ -202,15 +202,38 @@ pro_bar_opt_attr: id_attr
                 | progress_attr
 
                 | id_attr max_attr
-                | max_attr id_attr
+                | max_id_attr
                 | id_attr progress_attr
-                | progress_attr id_attr
+                | progress_id_attr
                 | max_progress_attr
                 | progress_max_attr 
 
                 | all_three_ProgressBar_attr
                 | /* empty */
                 ;
+
+max_id_attr: MAX EQUAL POSITIVE_INT id_attr{
+    if($3<0){
+                char err_msg[] = "Invalid android:max = \"";
+                            char str1[20];
+                            sprintf(str1, "%d", $3); // Convert pos_int into string
+                            strcat(err_msg, str1);
+                            strcat(err_msg, "\"");
+                            yyerror(err_msg); 
+            }
+}
+;
+
+progress_id_attr: PROGRESS EQUAL POSITIVE_INT id_attr{
+    if($3<0){
+                char err_msg[] = "Invalid android:progress = \"";
+                            char str1[20];
+                            sprintf(str1, "%d", $3); // Convert pos_int into string
+                            strcat(err_msg, str1);
+                            strcat(err_msg, "\"");
+                            yyerror(err_msg); 
+            }
+}
 
 max_attr: MAX EQUAL POSITIVE_INT{
         if($3<0){
