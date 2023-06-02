@@ -58,8 +58,8 @@ lin_layout :  LIN_LAYOUT_OPEN_TAG lin_layout_attr GT lin_layout_content LIN_LAYO
 lin_layout_attr : mandatory_attr lin_layout_opt_attr
                 ;
 
-mandatory_attr : layout_width_attr layout_heigth_attr
-               | layout_heigth_attr layout_width_attr
+mandatory_attr : layout_width_attr layout_height_attr
+               | layout_height_attr layout_width_attr
                ;
 
 lin_layout_opt_attr : id_attr ORIENTATION EQUAL STRING
@@ -104,7 +104,7 @@ layout_width_attr: LAYOUT_WIDTH EQUAL STRING {
                     }
                 ;
 
-layout_heigth_attr: LAYOUT_HEIGHT EQUAL STRING{
+layout_height_attr: LAYOUT_HEIGHT EQUAL STRING{
                         if(is_numeric($3))
                         {
                             int pos_int = string_to_int($3);
@@ -153,9 +153,14 @@ element : lin_layout
 text_view : TEXT_OPEN_TAG text_attr CLOSE_TAG 
           ;
 
-text_attr : mandatory_attr TEXT EQUAL STRING text_opt_attr
-          | TEXT EQUAL STRING mandatory_attr text_opt_attr
+text_attr : text_mandatory_attr text_opt_attr
           ;
+
+text_mandatory_attr : mandatory_attr TEXT EQUAL STRING 
+                    | TEXT EQUAL STRING mandatory_attr 
+                    | layout_height_attr TEXT EQUAL STRING layout_width_attr
+                    | layout_width_attr STRING TEXT EQUAL STRING layout_height_attr
+                    ;      
 
 text_opt_attr : id_attr TEXT_COLOR EQUAL STRING
               | TEXT_COLOR EQUAL STRING id_attr
@@ -167,8 +172,14 @@ text_opt_attr : id_attr TEXT_COLOR EQUAL STRING
 image_view : IMAGE_OPEN_TAG image_attr CLOSE_TAG    
            ;
 
-image_attr : mandatory_attr SRC EQUAL STRING image_and_button_opt_attr
+image_attr : image_mandatory_attr image_and_button_opt_attr
            ;
+
+image_mandatory_attr : mandatory_attr SRC EQUAL STRING 
+                    | SRC EQUAL STRING mandatory_attr 
+                    | layout_height_attr SRC EQUAL STRING layout_width_attr
+                    | layout_width_attr SRC EQUAL STRING layout_height_attr
+                    ;
 
 image_and_button_opt_attr : id_attr padding_attr
                         | padding_attr id_attr
@@ -187,20 +198,26 @@ padding_attr : PADDING EQUAL STRING
 button : BUTTON_OPEN_TAG button_attr CLOSE_TAG 
        ;
 
-button_attr : button_mand_attr image_and_button_opt_attr
+button_attr : button_mandatory_attr image_and_button_opt_attr
           ;
 
-button_mand_attr : mandatory_attr TEXT EQUAL STRING
-                 | TEXT EQUAL STRING mandatory_attr
-                 | layout_width_attr TEXT EQUAL STRING layout_heigth_attr
-                 | layout_heigth_attr TEXT EQUAL STRING layout_width_attr
-                 ;
+button_mandatory_attr : mandatory_attr TEXT EQUAL STRING
+                      | TEXT EQUAL STRING mandatory_attr
+                      | layout_width_attr TEXT EQUAL STRING layout_height_attr
+                      | layout_height_attr TEXT EQUAL STRING layout_width_attr
+                      ;
 
 radio_group : R_GROUP_OPEN_TAG r_group_attr GT r_group_content R_GROUP_CLOSE_TAG    
             ;
 
-r_group_attr : mandatory_attr rb_number_attr r_group_opt_attr
+r_group_attr : r_group_mandatory_attr r_group_opt_attr
              ;
+
+r_group_mandatory_attr : mandatory_attr rb_number_attr 
+                       | rb_number_attr mandatory_attr 
+                       | layout_height_attr STRING rb_number_attr layout_width_attr 
+                       | layout_width_attr STRING rb_number_attr layout_height_attr
+                       ;
 
 rb_number_attr : RB_NUMBER EQUAL STRING 
                     { 
@@ -227,12 +244,17 @@ r_group_content : radio_button
                 | COMMENT
                 ;
 
-radio_button : R_BUTTON_OPEN_TAG radio_button_attr CLOSE_TAG 
-                
+radio_button : R_BUTTON_OPEN_TAG radio_button_attr CLOSE_TAG     
              ;
 
-radio_button_attr : mandatory_attr TEXT EQUAL STRING radio_button_opt_attr
+radio_button_attr : radio_button_mandatory_attr radio_button_opt_attr
                   ;
+
+radio_button_mandatory_attr : mandatory_attr TEXT EQUAL STRING 
+                            | TEXT EQUAL STRING mandatory_attr 
+                            | layout_height_attr TEXT EQUAL STRING layout_width_attr
+                            | layout_width_attr TEXT EQUAL STRING layout_height_attr
+                            ;
 
 radio_button_opt_attr : { flag = true; } id_attr 
               | /* empty */
