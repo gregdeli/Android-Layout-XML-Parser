@@ -50,7 +50,7 @@
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
         android:rb_number = "3"
-        android:checkedButton = "xyolo">
+        android:checkedButton = "xyolox">
         
         <RadioButton
         android:layout_width = "match_parent"
