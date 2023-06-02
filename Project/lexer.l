@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include "parser.tab.h"
 void yyerror(const char *);
-void remove_quotes(char *);
 extern int rb_number;
 int rb_counter = 0;
 void check_rb_num();
@@ -50,7 +49,7 @@ extern char checked_button_id[100];
 "<!--"[^-]*(-[^-]+)*"-->" { printf("%s", yytext); /* Ignore comments */ }  
 
 "="                { printf("%s", yytext); return EQUAL; }
-\"-?[0-9]+\"         { printf("%s", yytext); remove_quotes(yytext); yylval.pos_int = atoi(yytext); return POSITIVE_INT; }
+
 \"[^\"\n]*\"       { printf("%s", yytext); sscanf(yytext, "%s", yylval.str); return STRING; }
 
 [ \t\n\r\f]+       { printf("%s", yytext); /* Ignore whitespace */ } 
@@ -63,23 +62,8 @@ void yyerror(const char *msg) {
     exit(1);
 }
 
-void remove_quotes(char* str) {
-    int length = strlen(str);
-    
-    // Check if the string is long enough to have quotes
-    if (length >= 2 && str[0] == '"' && str[length - 1] == '"') {
-        // Afairoume to arxiko quote kanontas shift mia thesi aristera olous tous xaraktires
-        for (int i = 0; i < length - 1; i++) {
-            str[i] = str[i + 1];
-        }
-        
-        // Afairesi tou teliko quote thetontas stin thesi tou ton termatiko xaraktira
-        str[length - 2] = '\0';
-    }
-}
-
 void check_rb_num(){
-    if(rb_counter>rb_number)
+    if(rb_counter!=rb_number)
     {
         char err_msg[] = "Invalid number of RadioButton elements. They should be ";
         char str_rb_num[5];

@@ -59,25 +59,24 @@ extern int yydebug;
     ID = 265,
     ORIENTATION = 266,
     EQUAL = 267,
-    POSITIVE_INT = 268,
-    STRING = 269,
-    TEXT_OPEN_TAG = 270,
-    CLOSE_TAG = 271,
-    TEXT = 272,
-    TEXT_COLOR = 273,
-    IMAGE_OPEN_TAG = 274,
-    SRC = 275,
-    PADDING = 276,
-    BUTTON_OPEN_TAG = 277,
-    R_GROUP_OPEN_TAG = 278,
-    R_GROUP_CLOSE_TAG = 279,
-    R_BUTTON_OPEN_TAG = 280,
-    CHECKED_BUTTON = 281,
-    RB_NUMBER = 282,
-    PRO_BAR_OPEN_TAG = 283,
-    MAX = 284,
-    PROGRESS = 285,
-    COMMENT = 286
+    STRING = 268,
+    TEXT_OPEN_TAG = 269,
+    CLOSE_TAG = 270,
+    TEXT = 271,
+    TEXT_COLOR = 272,
+    IMAGE_OPEN_TAG = 273,
+    SRC = 274,
+    PADDING = 275,
+    BUTTON_OPEN_TAG = 276,
+    R_GROUP_OPEN_TAG = 277,
+    R_GROUP_CLOSE_TAG = 278,
+    R_BUTTON_OPEN_TAG = 279,
+    CHECKED_BUTTON = 280,
+    RB_NUMBER = 281,
+    PRO_BAR_OPEN_TAG = 282,
+    MAX = 283,
+    PROGRESS = 284,
+    COMMENT = 285
   };
 #endif
 
@@ -85,13 +84,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 36 "parser.y"
+#line 39 "parser.y"
 
 	char str[20];
     char str2[20];
-    int pos_int;
 
-#line 95 "parser.tab.h"
+#line 93 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

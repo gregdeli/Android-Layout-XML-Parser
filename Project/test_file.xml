@@ -1,6 +1,6 @@
 <!-- comment bitch -->
 <LinearLayout
-    android:layout_width = "match_parent" 
+    android:layout_width = "1" 
     
     android:layout_height = "17"
     
@@ -10,7 +10,7 @@
     <!-- fuck  - you 89 bit-ch -->
 
     <LinearLayout
-        android:layout_width = "2"
+        android:layout_width = "1"
         android:layout_height = "match_parent">
 
         <TextView
@@ -18,7 +18,7 @@
         android:layout_width = "wrap_content"
         android:layout_height = "29"
 
-        android:id = "id"
+        android:id = "sdg8"
         android:textColor = "dummy"/>
         <!-- fuck  - you 89 bit-ch -->
 
@@ -29,7 +29,7 @@
         android:layout_height = "20"
         android:text = "dummy text"
 
-        android:id = "TV1"
+        android:id = "1id"
         android:textColor = "dummy thick"/>
 
     <ImageView
@@ -40,23 +40,23 @@
         android:padding = "30" />
     
     <Button
-        android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
-        android:text = "cool text"
-        
+        android:layout_width = "match_parent"
+        android:text = "kanoniko"
+
         android:padding = "30" />
 
     <RadioGroup
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
-        android:rb_number = "3"
-        android:checkedButton = "xyolox">
+        android:rb_number = "0"
+        android:checkedButton = "2">
         
         <RadioButton
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
         android:text = "cool text"
-        android:id = "holo" />
+        android:id = "2" />
 
         <RadioButton
         android:layout_width = "match_parent"
@@ -101,13 +101,19 @@
             android:id = "TV5"
             android:padding = "100" />
 
+        <ProgressBar
+            android:layout_height = "17"
+            android:layout_width = "17"
+
+            android:max = "10"
+            android:id = "idid" />
+
     </RelativeLayout>
 <ProgressBar
     android:layout_height = "17"
     android:layout_width = "17"
 
-    android:id = "TV6"
-    android:max = "10"
-    android:progress = "8" />
+    android:max = "100"
+    android:progress = "5" />
 
 </LinearLayout>

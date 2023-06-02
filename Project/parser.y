@@ -7,6 +7,9 @@
 int yylex();
 void yyerror(const char *);
 extern FILE *yyin;
+bool is_numeric(char* str);
+void remove_quotes(char* str);
+int string_to_int(char* str);
 void insert_id(char *str);
 bool check_id(char *str);
 typedef struct node {
@@ -26,7 +29,7 @@ void checkRestrictions(int integ1, int integ2, char* less, char* more);
 %token LIN_LAYOUT_OPEN_TAG GT LIN_LAYOUT_CLOSE_TAG 
 %token RE_LAYOUT_OPEN_TAG RE_LAYOUT_CLOSE_TAG
 %token LAYOUT_WIDTH LAYOUT_HEIGHT ID ORIENTATION EQUAL
-%token POSITIVE_INT STRING
+%token STRING
 %token TEXT_OPEN_TAG CLOSE_TAG TEXT TEXT_COLOR
 %token IMAGE_OPEN_TAG SRC PADDING
 %token BUTTON_OPEN_TAG R_GROUP_OPEN_TAG R_GROUP_CLOSE_TAG R_BUTTON_OPEN_TAG CHECKED_BUTTON RB_NUMBER
@@ -36,10 +39,8 @@ void checkRestrictions(int integ1, int integ2, char* less, char* more);
 %union{
 	char str[20];
     char str2[20];
-    int pos_int;
 }
 
-%type <pos_int> POSITIVE_INT
 %type <str> STRING
 
 %locations
@@ -69,55 +70,53 @@ lin_layout_opt_attr : id_attr ORIENTATION EQUAL STRING
                     ;
 
 id_attr : ID EQUAL STRING 
-{ 
-    insert_id($3); 
+        { 
+            insert_id($3); 
 
-    if(flag == true && checked_button_id != NULL)
-    {
-        if(strcmp($3, checked_button_id) == 0)
-        {
-            flag_checked = 1;
+            if(flag == true && strcmp(checked_button_id, "") != 0)
+            {
+                if(strcmp($3, checked_button_id) == 0)
+                {
+                    flag_checked = 1;
+                }
+            }
+
+            flag = false;
         }
-    }
-
-    flag = false;
-}
         ;
 
 layout_width_attr: LAYOUT_WIDTH EQUAL STRING {
-                        if(!((strcmp($3, "\"match_parent\"") == 0) || (strcmp($3, "\"wrap_content\"") == 0))){
+                        if(is_numeric($3))
+                        {
+                            int pos_int = string_to_int($3);
+                            checkPositiveInt(pos_int, "layout_width");
+                        }
+                        else
+                        {
+                            if(!((strcmp($3, "\"match_parent\"") == 0) || (strcmp($3, "\"wrap_content\"") == 0))){
                             char err_msg[] = "Invalid android:layout_width = ";
                             strcat(err_msg, $3);
                             yyerror(err_msg); 
+                            }
                         }
+                        
+                        
                     }
-                | LAYOUT_WIDTH EQUAL POSITIVE_INT {
-                        if(($3<=0)){
-                            char err_msg[] = "Invalid android:layout_width = \"";
-                            char str[20];
-                            sprintf(str, "%d", $3); // Convert pos_int into string
-                            strcat(err_msg, str);
-                            strcat(err_msg, "\"");
-                            yyerror(err_msg); 
-                        }
-                  }
                 ;
 
 layout_heigth_attr: LAYOUT_HEIGHT EQUAL STRING{
-                        if(!((strcmp($3, "\"match_parent\"") == 0) || (strcmp($3, "\"wrap_content\"") == 0))){
-                            char err_msg[] = "Invalid android:layout_height = \"";
+                        if(is_numeric($3))
+                        {
+                            int pos_int = string_to_int($3);
+                            checkPositiveInt(pos_int, "layout_height");
+                        }
+                        else
+                        {
+                            if(!((strcmp($3, "\"match_parent\"") == 0) || (strcmp($3, "\"wrap_content\"") == 0))){
+                            char err_msg[] = "Invalid android:layout_height = ";
                             strcat(err_msg, $3);
                             yyerror(err_msg); 
                             }
-                    }
-                  | LAYOUT_HEIGHT EQUAL POSITIVE_INT{
-                        if(($3<=0)){
-                            char err_msg[] = "Invalid android:layout_height = \"";
-                            char str[20];
-                            sprintf(str, "%d", $3); // Convert pos_int into string
-                            strcat(err_msg, str);
-                            strcat(err_msg, "\"");
-                            yyerror(err_msg); 
                         }
                     }
                   ;
@@ -178,24 +177,24 @@ image_and_button_opt_attr : id_attr padding_attr
                         | /* empty */
                         ;
 
-padding_attr : PADDING EQUAL POSITIVE_INT
+padding_attr : PADDING EQUAL STRING
 {
-    if(($3<=0))
-    {
-        char err_msg[] = "Invalid android:padding = \"";
-        char str[20];
-        sprintf(str, "%d", $3); // Convert pos_int into string
-        strcat(err_msg, str);
-        strcat(err_msg, "\"");
-        yyerror(err_msg);    
-    }
-};
+    int pos_int = string_to_int($3);
+    checkPositiveInt(pos_int, "padding");
+}
+;
 
 button : BUTTON_OPEN_TAG button_attr CLOSE_TAG 
        ;
 
-button_attr : mandatory_attr TEXT EQUAL STRING image_and_button_opt_attr
+button_attr : button_mand_attr image_and_button_opt_attr
           ;
+
+button_mand_attr : mandatory_attr TEXT EQUAL STRING
+                 | TEXT EQUAL STRING mandatory_attr
+                 | layout_width_attr TEXT EQUAL STRING layout_heigth_attr
+                 | layout_heigth_attr TEXT EQUAL STRING layout_width_attr
+                 ;
 
 radio_group : R_GROUP_OPEN_TAG r_group_attr GT r_group_content R_GROUP_CLOSE_TAG    
             ;
@@ -203,7 +202,12 @@ radio_group : R_GROUP_OPEN_TAG r_group_attr GT r_group_content R_GROUP_CLOSE_TAG
 r_group_attr : mandatory_attr rb_number_attr r_group_opt_attr
              ;
 
-rb_number_attr : RB_NUMBER EQUAL POSITIVE_INT { rb_number = $3; }
+rb_number_attr : RB_NUMBER EQUAL STRING 
+                    { 
+                        int pos_int = string_to_int($3);
+                        checkPositiveInt(pos_int, "rb_number"); 
+                        rb_number = pos_int;
+                    }
           ;
 
 r_group_opt_attr : id_attr checked_button_attr
@@ -254,30 +258,30 @@ pro_bar_opt_attr: id_attr
                 | /* empty */
                 ;
 
-max_attr: MAX EQUAL POSITIVE_INT{  checkPositiveInt($3, "max"); }
+max_attr: MAX EQUAL STRING { checkPositiveInt(string_to_int($3), "max"); }
 ;
 
 
-progress_attr: PROGRESS EQUAL POSITIVE_INT{ checkPositiveInt($3, "progress"); }
+progress_attr: PROGRESS EQUAL STRING{ checkPositiveInt(string_to_int($3), "progress"); }
 ;
 
-max_id_attr: MAX EQUAL POSITIVE_INT id_attr{ checkPositiveInt($3, "max"); }
+max_id_attr: MAX EQUAL STRING id_attr{ checkPositiveInt(string_to_int($3), "max"); }
 ;
 
-progress_id_attr: PROGRESS EQUAL POSITIVE_INT id_attr{ checkPositiveInt($3, "progress"); }  
+progress_id_attr: PROGRESS EQUAL STRING id_attr{ checkPositiveInt(string_to_int($3), "progress"); }  
 
-max_progress_attr: MAX EQUAL POSITIVE_INT PROGRESS EQUAL POSITIVE_INT{ 
-    checkPositiveInt($3, "max");
-    checkPositiveInt($6, "progress");
-    checkRestrictions($3,$6, "max", "progress");
+max_progress_attr: MAX EQUAL STRING PROGRESS EQUAL STRING{ 
+    checkPositiveInt(string_to_int($3), "max");
+    checkPositiveInt(string_to_int($6), "progress");
+    checkRestrictions(string_to_int($3),string_to_int($6), "max", "progress");
                 }
 ;
 
 
-progress_max_attr: PROGRESS EQUAL POSITIVE_INT MAX EQUAL POSITIVE_INT{
-    checkPositiveInt($3, "progress");
-    checkPositiveInt($6, "max");
-    checkRestrictions($6,$3, "max", "progress");
+progress_max_attr: PROGRESS EQUAL STRING MAX EQUAL STRING{
+    checkPositiveInt(string_to_int($3), "progress");
+    checkPositiveInt(string_to_int($6), "max");
+    checkRestrictions(string_to_int($6),string_to_int($3), "max", "progress");
                 }
 ;
 
@@ -285,19 +289,62 @@ all_three_ProgressBar_attr: id_attr max_progress_attr
                           | id_attr progress_max_attr
                           | max_progress_attr id_attr
                           | progress_max_attr id_attr
-                          | MAX EQUAL POSITIVE_INT id_attr PROGRESS EQUAL POSITIVE_INT{
-                            checkPositiveInt($3, "max");
-                            checkPositiveInt($7, "progress");
-                            checkRestrictions($3,$7, "max", "progress");
+                          | MAX EQUAL STRING id_attr PROGRESS EQUAL STRING{
+                            checkPositiveInt(string_to_int($3), "max");
+                            checkPositiveInt(string_to_int($7), "progress");
+                            checkRestrictions(string_to_int($3),string_to_int($7), "max", "progress");
                             }
-                        | PROGRESS EQUAL POSITIVE_INT id_attr MAX EQUAL POSITIVE_INT{
-                            checkPositiveInt($7, "max");
-                            checkPositiveInt($3, "progress");
-                            checkRestrictions($7,$3, "max", "progress");
+                        | PROGRESS EQUAL STRING id_attr MAX EQUAL STRING{
+                            checkPositiveInt(string_to_int($7), "max");
+                            checkPositiveInt(string_to_int($3), "progress");
+                            checkRestrictions(string_to_int($7),string_to_int($3), "max", "progress");
                             }
                           ;
 
 %%
+bool is_numeric(char* str) {
+
+    char local_str[20];
+    strcpy(local_str, str);
+    remove_quotes(local_str);
+    // Check the first character
+    int i = 0;
+    if (local_str[0] == '-') {
+        // If the first character is a minus sign, move to the next character
+        i = 1;
+    }
+    // Check the remaining characters
+    while (local_str[i] != '\0') {
+        // If any character is not a digit, return false
+        if (local_str[i] < '0' || local_str[i] > '9') {
+            return false;
+        }
+        i++;
+    }
+    // All characters are digits
+    return true;
+}
+
+void remove_quotes(char* str) {
+    int length = strlen(str);
+    
+    // Check if the string is long enough to have quotes
+    if (length >= 2 && str[0] == '"' && str[length - 1] == '"') {
+        // Afairoume to arxiko quote kanontas shift mia thesi aristera olous tous xaraktires
+        for (int i = 0; i < length - 1; i++) {
+            str[i] = str[i + 1];
+        }
+        
+        // Afairesi tou teliko quote thetontas stin thesi tou ton termatiko xaraktira
+        str[length - 2] = '\0';
+    }
+}
+
+int string_to_int(char* str)
+{
+    remove_quotes(str);
+    return atoi(str);
+}
 
 void insert_id(char *str)
 {
@@ -336,7 +383,7 @@ bool check_id(char *str)
 
 void checkPositiveInt(int integ, char attribute[]){
        if(integ<0){
-                char err_msg[] = "Invalid android:";
+                char err_msg[50] = "Invalid android:";
                             char str1[20];
                             sprintf(str1, "%d", integ); // Convert pos_int into string
                             strcat(err_msg, attribute); 
