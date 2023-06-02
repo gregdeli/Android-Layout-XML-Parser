@@ -9,27 +9,8 @@
 
     <!-- fuck  - you 89 bit-ch -->
 
-    <RadioGroup
-        android:layout_width = "match_parent" 
-        android:layout_height = "17"
-        android:rb_number = "2">
-
-        <RadioButton
-            android:layout_width = "match_parent" 
-            android:layout_height = "17"
-            android:text = "Option1"/>
-        <RadioButton
-            android:layout_width = "match_parent" 
-            android:layout_height = "17"
-            android:text = "Option2"/>
-        <RadioButton
-        android:layout_width = "match_parent" 
-        android:layout_height = "17"
-        android:text = "Option3"/>
-    </RadioGroup>
-
     <LinearLayout
-        android:layout_width = "10"
+        android:layout_width = "2"
         android:layout_height = "match_parent">
 
         <TextView
@@ -50,14 +31,40 @@
 
         android:id = "TV1"
         android:textColor = "dummy thick"/>
+
     <ImageView
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
         android:src = "string"
         
-        android:padding = "69" />
+        android:padding = "30" />
+    
+    <Button
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:text = "cool text"
+        
+        android:padding = "30" />
 
+    <RadioGroup
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:rb_number = "3"
+        android:checkedButton = "xyolo">
+        
+        <RadioButton
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:text = "cool text"
+        android:id = "holo" />
 
+        <RadioButton
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:text = "cool text"
+        android:id = "xyolox" />
+
+    </RadioGroup>
 
     <RelativeLayout
         android:layout_width = "wrap_content"
@@ -92,17 +99,15 @@
             android:src = "string"
             
             android:id = "TV5"
-            android:padding = "1" />
+            android:padding = "100" />
 
     </RelativeLayout>
 <ProgressBar
     android:layout_height = "17"
     android:layout_width = "17"
 
-   
-   android:max = "6" 
-   android:id = "id8"
-   
-/>
+    android:id = "TV6"
+    android:max = "10"
+    android:progress = "8" />
 
 </LinearLayout>

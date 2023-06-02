@@ -618,8 +618,11 @@ void remove_quotes(char *);
 extern int rb_number;
 int rb_counter = 0;
 void check_rb_num();
-#line 622 "lex.yy.c"
-#line 623 "lex.yy.c"
+void check_radio_button_id();
+extern int flag_checked;
+extern char checked_button_id[100];
+#line 625 "lex.yy.c"
+#line 626 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -836,10 +839,10 @@ YY_DECL
 		}
 
 	{
-#line 13 "lexer.l"
+#line 16 "lexer.l"
 
 
-#line 843 "lex.yy.c"
+#line 846 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -908,167 +911,167 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 15 "lexer.l"
+#line 18 "lexer.l"
 { printf("%s", yytext); return LIN_LAYOUT_OPEN_TAG; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 16 "lexer.l"
+#line 19 "lexer.l"
 { printf("%s", yytext); return GT; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 17 "lexer.l"
+#line 20 "lexer.l"
 { printf("%s", yytext); return CLOSE_TAG; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 18 "lexer.l"
+#line 21 "lexer.l"
 { printf("%s", yytext); return LIN_LAYOUT_CLOSE_TAG; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 19 "lexer.l"
+#line 22 "lexer.l"
 { printf("%s", yytext); return LAYOUT_WIDTH; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 20 "lexer.l"
+#line 23 "lexer.l"
 { printf("%s", yytext); return LAYOUT_HEIGHT; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 21 "lexer.l"
+#line 24 "lexer.l"
 { printf("%s", yytext); return ID; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 22 "lexer.l"
+#line 25 "lexer.l"
 { printf("%s", yytext); return ORIENTATION; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 24 "lexer.l"
+#line 27 "lexer.l"
 { printf("%s", yytext); return RE_LAYOUT_OPEN_TAG; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 25 "lexer.l"
+#line 28 "lexer.l"
 { printf("%s", yytext); return RE_LAYOUT_CLOSE_TAG; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 27 "lexer.l"
+#line 30 "lexer.l"
 { printf("%s", yytext); return TEXT_OPEN_TAG; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 28 "lexer.l"
+#line 31 "lexer.l"
 { printf("%s", yytext); return TEXT; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 29 "lexer.l"
+#line 32 "lexer.l"
 { printf("%s", yytext); return TEXT_COLOR; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 31 "lexer.l"
+#line 34 "lexer.l"
 { printf("%s", yytext); return IMAGE_OPEN_TAG; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 32 "lexer.l"
+#line 35 "lexer.l"
 { printf("%s", yytext); return SRC; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 33 "lexer.l"
+#line 36 "lexer.l"
 { printf("%s", yytext); return PADDING; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 35 "lexer.l"
+#line 38 "lexer.l"
 { printf("%s", yytext); return BUTTON_OPEN_TAG; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 37 "lexer.l"
+#line 40 "lexer.l"
 { printf("%s", yytext); return R_GROUP_OPEN_TAG; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 38 "lexer.l"
-{ check_rb_num(); printf("%s", yytext); return R_GROUP_CLOSE_TAG; }
+#line 41 "lexer.l"
+{ check_rb_num(); check_radio_button_id(); printf("%s", yytext); return R_GROUP_CLOSE_TAG; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 39 "lexer.l"
+#line 42 "lexer.l"
 { rb_counter++; printf("%s", yytext); return R_BUTTON_OPEN_TAG; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 40 "lexer.l"
+#line 43 "lexer.l"
 { printf("%s", yytext); return CHECKED_BUTTON; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 41 "lexer.l"
+#line 44 "lexer.l"
 { printf("%s", yytext); return RB_NUMBER; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 43 "lexer.l"
+#line 46 "lexer.l"
 { printf("%s", yytext); return PRO_BAR_OPEN_TAG; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 44 "lexer.l"
+#line 47 "lexer.l"
 { printf("%s", yytext); return MAX; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 45 "lexer.l"
+#line 48 "lexer.l"
 { printf("%s", yytext); return PROGRESS; }
 	YY_BREAK
 case 26:
 /* rule 26 can match eol */
 YY_RULE_SETUP
-#line 47 "lexer.l"
+#line 50 "lexer.l"
 { printf("%s", yytext); /* Ignore comments */ }  
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 49 "lexer.l"
+#line 52 "lexer.l"
 { printf("%s", yytext); return EQUAL; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 50 "lexer.l"
+#line 53 "lexer.l"
 { printf("%s", yytext); remove_quotes(yytext); yylval.pos_int = atoi(yytext); return POSITIVE_INT; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 51 "lexer.l"
+#line 54 "lexer.l"
 { printf("%s", yytext); sscanf(yytext, "%s", yylval.str); return STRING; }
 	YY_BREAK
 case 30:
 /* rule 30 can match eol */
 YY_RULE_SETUP
-#line 53 "lexer.l"
+#line 56 "lexer.l"
 { printf("%s", yytext); /* Ignore whitespace */ } 
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 54 "lexer.l"
+#line 57 "lexer.l"
 { yyerror("Invalid character"); }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 56 "lexer.l"
+#line 59 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 1072 "lex.yy.c"
+#line 1075 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2085,10 +2088,11 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 56 "lexer.l"
+#line 59 "lexer.l"
 
 void yyerror(const char *msg) {
-    fprintf(stderr, "\nError: %s\nAt line: %d\n", msg,yylineno);
+    printf("\n");
+    fprintf(stderr, "\nError: %s.\nAt line: %d\n", msg,yylineno);
     exit(1);
 }
 
@@ -2116,8 +2120,22 @@ void check_rb_num(){
         strcat(err_msg, str_rb_num);
         yyerror(err_msg); 
     }
+
+    rb_counter = 0;
+}
+
+void check_radio_button_id()
+{
+    if(flag_checked == 0 && strcmp(checked_button_id, "") != 0)
+    {
+        char err_msg[] = "Invalid id in RadioButton elements. Exactly one id should match the id of android:checkedButton = ";
+        strcat(err_msg, checked_button_id);
+        yyerror(err_msg); 
+    }
+    
+    flag_checked = 0;
 }
 
 int yywrap(void) {
     return 1;
-} 
+}

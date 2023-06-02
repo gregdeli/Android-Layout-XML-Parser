@@ -6,6 +6,9 @@ void remove_quotes(char *);
 extern int rb_number;
 int rb_counter = 0;
 void check_rb_num();
+void check_radio_button_id();
+extern int flag_checked;
+extern char checked_button_id[100];
 %}
 
 %option yylineno
@@ -35,7 +38,7 @@ void check_rb_num();
 "<Button"  { printf("%s", yytext); return BUTTON_OPEN_TAG; }
 
 "<RadioGroup"            { printf("%s", yytext); return R_GROUP_OPEN_TAG; }
-"</RadioGroup>"          { check_rb_num(); printf("%s", yytext); return R_GROUP_CLOSE_TAG; }
+"</RadioGroup>"          { check_rb_num(); check_radio_button_id(); printf("%s", yytext); return R_GROUP_CLOSE_TAG; }
 "<RadioButton"           { rb_counter++; printf("%s", yytext); return R_BUTTON_OPEN_TAG; }
 "android:checkedButton"  { printf("%s", yytext); return CHECKED_BUTTON; }
 "android:rb_number"      { printf("%s", yytext); return RB_NUMBER; }
@@ -55,7 +58,8 @@ void check_rb_num();
 
 %%
 void yyerror(const char *msg) {
-    fprintf(stderr, "\nError: %s\nAt line: %d\n", msg,yylineno);
+    printf("\n");
+    fprintf(stderr, "\nError: %s.\nAt line: %d\n", msg,yylineno);
     exit(1);
 }
 
@@ -83,8 +87,22 @@ void check_rb_num(){
         strcat(err_msg, str_rb_num);
         yyerror(err_msg); 
     }
+
+    rb_counter = 0;
+}
+
+void check_radio_button_id()
+{
+    if(flag_checked == 0 && strcmp(checked_button_id, "") != 0)
+    {
+        char err_msg[] = "Invalid id in RadioButton elements. Exactly one id should match the id of android:checkedButton = ";
+        strcat(err_msg, checked_button_id);
+        yyerror(err_msg); 
+    }
+    
+    flag_checked = 0;
 }
 
 int yywrap(void) {
     return 1;
-} 
+}

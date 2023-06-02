@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/greg/Desktop/Link to Flex-Bison-Project/Project",
-      "program": "/home/greg/Desktop/Link to Flex-Bison-Project/Project/build/Debug/outDebug",
+      "cwd": "/home/greg/Flex-Bison-Project/Project",
+      "program": "/home/greg/Flex-Bison-Project/Project/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
