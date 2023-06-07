@@ -75,8 +75,7 @@ extern int yydebug;
     RB_NUMBER = 281,
     PRO_BAR_OPEN_TAG = 282,
     MAX = 283,
-    PROGRESS = 284,
-    COMMENT = 285
+    PROGRESS = 284
   };
 #endif
 
@@ -84,12 +83,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 39 "parser.y"
+#line 38 "parser.y"
 
 	char str[20];
     char str2[20];
 
-#line 93 "parser.tab.h"
+#line 92 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

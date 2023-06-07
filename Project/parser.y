@@ -34,7 +34,6 @@ void checkRestrictions(int integ1, int integ2, char* less, char* more);
 %token IMAGE_OPEN_TAG SRC PADDING
 %token BUTTON_OPEN_TAG R_GROUP_OPEN_TAG R_GROUP_CLOSE_TAG R_BUTTON_OPEN_TAG CHECKED_BUTTON RB_NUMBER
 %token PRO_BAR_OPEN_TAG MAX PROGRESS
-%token COMMENT
 
 %union{
 	char str[20];
@@ -241,7 +240,6 @@ checked_button_attr : CHECKED_BUTTON EQUAL STRING
 
 r_group_content : radio_button
                 | r_group_content radio_button
-                | COMMENT
                 ;
 
 radio_button : R_BUTTON_OPEN_TAG radio_button_attr CLOSE_TAG     
