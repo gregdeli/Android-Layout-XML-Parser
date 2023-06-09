@@ -122,7 +122,6 @@ layout_height_attr: LAYOUT_HEIGHT EQUAL STRING{
 
 lin_layout_content : element
                    | lin_layout_content element
-                   | /*empty*/
                    ;
 
 re_layout : RE_LAYOUT_OPEN_TAG re_layout_attr GT re_layout_content RE_LAYOUT_CLOSE_TAG
@@ -224,14 +223,14 @@ rb_number_attr : RB_NUMBER EQUAL STRING
                         checkPositiveInt(pos_int, "rb_number"); 
                         rb_number = pos_int;
                     }
-          ;
+              ;
 
 r_group_opt_attr : id_attr checked_button_attr
-                | checked_button_attr id_attr
-                | id_attr
-                | checked_button_attr
-                | /* empty */
-                ;
+                 | checked_button_attr id_attr
+                 | id_attr
+                 | checked_button_attr
+                 | /* empty */
+                 ;
 
 checked_button_attr : CHECKED_BUTTON EQUAL STRING
 {
