@@ -583,10 +583,10 @@ static const yytype_int16 yyrline[] =
      165,   166,   167,   170,   173,   176,   177,   178,   179,   182,
      183,   184,   185,   186,   189,   196,   199,   202,   203,   204,
      205,   208,   211,   214,   215,   216,   217,   220,   228,   229,
-     230,   231,   232,   235,   240,   241,   244,   247,   250,   251,
-     252,   253,   256,   256,   257,   260,   262,   265,   266,   267,
-     269,   270,   271,   272,   273,   274,   276,   277,   280,   283,
-     286,   289,   291,   298,   305,   306,   307,   308,   309,   314
+     230,   231,   232,   235,   241,   242,   245,   248,   251,   252,
+     253,   254,   257,   257,   258,   261,   263,   266,   267,   268,
+     270,   271,   272,   273,   274,   275,   277,   278,   281,   284,
+     287,   290,   292,   299,   306,   307,   308,   309,   310,   315
 };
 #endif
 
@@ -1723,37 +1723,37 @@ yyreduce:
     break;
 
   case 82:
-#line 256 "parser.y"
+#line 257 "parser.y"
                         { flag = true; }
 #line 1729 "parser.tab.c"
     break;
 
   case 98:
-#line 280 "parser.y"
+#line 281 "parser.y"
                            { checkPositiveInt(string_to_int((yyvsp[0].str)), "max"); }
 #line 1735 "parser.tab.c"
     break;
 
   case 99:
-#line 283 "parser.y"
+#line 284 "parser.y"
                                     { checkPositiveInt(string_to_int((yyvsp[0].str)), "progress"); }
 #line 1741 "parser.tab.c"
     break;
 
   case 100:
-#line 286 "parser.y"
+#line 287 "parser.y"
                                      { checkPositiveInt(string_to_int((yyvsp[-1].str)), "max"); }
 #line 1747 "parser.tab.c"
     break;
 
   case 101:
-#line 289 "parser.y"
+#line 290 "parser.y"
                                                { checkPositiveInt(string_to_int((yyvsp[-1].str)), "progress"); }
 #line 1753 "parser.tab.c"
     break;
 
   case 102:
-#line 291 "parser.y"
+#line 292 "parser.y"
                                                          { 
     checkPositiveInt(string_to_int((yyvsp[-3].str)), "max");
     checkPositiveInt(string_to_int((yyvsp[0].str)), "progress");
@@ -1763,7 +1763,7 @@ yyreduce:
     break;
 
   case 103:
-#line 298 "parser.y"
+#line 299 "parser.y"
                                                          {
     checkPositiveInt(string_to_int((yyvsp[-3].str)), "progress");
     checkPositiveInt(string_to_int((yyvsp[0].str)), "max");
@@ -1773,7 +1773,7 @@ yyreduce:
     break;
 
   case 108:
-#line 309 "parser.y"
+#line 310 "parser.y"
                                                                           {
                             checkPositiveInt(string_to_int((yyvsp[-4].str)), "max");
                             checkPositiveInt(string_to_int((yyvsp[0].str)), "progress");
@@ -1783,7 +1783,7 @@ yyreduce:
     break;
 
   case 109:
-#line 314 "parser.y"
+#line 315 "parser.y"
                                                                         {
                             checkPositiveInt(string_to_int((yyvsp[0].str)), "max");
                             checkPositiveInt(string_to_int((yyvsp[-4].str)), "progress");
@@ -2031,7 +2031,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 321 "parser.y"
+#line 322 "parser.y"
 
 bool is_numeric(char* str) {
 

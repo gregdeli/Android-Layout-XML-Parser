@@ -236,6 +236,7 @@ checked_button_attr : CHECKED_BUTTON EQUAL STRING
 {
     strcpy(checked_button_id, $3);
 }
+;
 
 r_group_content : radio_button
                 | r_group_content radio_button

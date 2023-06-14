@@ -2112,6 +2112,7 @@ void check_radio_button_id()
     }
     
     flag_checked = 0;
+    strcpy(checked_button_id, "");
 }
 
 int yywrap(void) {
