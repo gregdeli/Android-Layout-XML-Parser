@@ -36,7 +36,7 @@
         android:layout_height = "wrap_content"
         android:src = "string"
         
-        android:padding = "30" />
+        android:padding = "1" />
     
     <Button
         android:layout_height = "wrap_content"

@@ -85,7 +85,7 @@ union YYSTYPE
 {
 #line 38 "parser.y"
 
-	char str[20];
+    char str[20];
     char str2[20];
 
 #line 92 "parser.tab.h"

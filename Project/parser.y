@@ -36,7 +36,7 @@ void checkRestrictions(int integ1, int integ2, char* less, char* more);
 %token PRO_BAR_OPEN_TAG MAX PROGRESS
 
 %union{
-	char str[20];
+    char str[20];
     char str2[20];
 }
 
@@ -213,8 +213,8 @@ r_group_attr : r_group_mandatory_attr r_group_opt_attr
 
 r_group_mandatory_attr : mandatory_attr rb_number_attr 
                        | rb_number_attr mandatory_attr 
-                       | layout_height_attr STRING rb_number_attr layout_width_attr 
-                       | layout_width_attr STRING rb_number_attr layout_height_attr
+                       | layout_height_attr rb_number_attr layout_width_attr 
+                       | layout_width_attr rb_number_attr layout_height_attr
                        ;
 
 rb_number_attr : RB_NUMBER EQUAL STRING 
@@ -280,7 +280,6 @@ pro_bar_opt_attr: id_attr
 max_attr: MAX EQUAL STRING { checkPositiveInt(string_to_int($3), "max"); }
 ;
 
-
 progress_attr: PROGRESS EQUAL STRING{ checkPositiveInt(string_to_int($3), "progress"); }
 ;
 
@@ -295,7 +294,6 @@ max_progress_attr: MAX EQUAL STRING PROGRESS EQUAL STRING{
     checkRestrictions(string_to_int($3),string_to_int($6), "max", "progress");
                 }
 ;
-
 
 progress_max_attr: PROGRESS EQUAL STRING MAX EQUAL STRING{
     checkPositiveInt(string_to_int($3), "progress");
@@ -401,7 +399,7 @@ bool check_id(char *str)
 }
 
 void checkPositiveInt(int integ, char attribute[]){
-       if(integ<0){
+       if(integ<=0){
                 char err_msg[50] = "Invalid android:";
                             char str1[20];
                             sprintf(str1, "%d", integ); // Convert pos_int into string
