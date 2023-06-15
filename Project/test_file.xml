@@ -13,13 +13,13 @@
         android:layout_height = "match_parent">
 
         <TextView
-        android:text = "dummy text"
+        android:text = "dtext"
         android:layout_width = "wrap_content"
         android:layout_height = "29"
 
         android:id = "sdg8"
         android:textColor = "dummy"/>
-        <!-- yooooooooo -->
+        <!-- I am another comment -->
 
     </LinearLayout>
 
@@ -29,7 +29,7 @@
         android:text = "dummy text"
         <!-- crazy comment -->
         android:id = "1id"
-        android:textColor = "lots of color"/>
+        android:textColor = "lots of colors"/>
 
     <ImageView
         android:layout_width = "match_parent"
@@ -92,7 +92,7 @@
             android:text = "dummy text"
 
             android:id = "TV4"
-            android:textColor = "thick"/>
+            android:textColor = "red"/>
         <ImageView
             android:layout_width = "match_parent"
             android:src = "string"
