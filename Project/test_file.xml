@@ -27,7 +27,7 @@
         android:layout_width = "match_parent"
         android:layout_height = "20"
         android:text = "dummy text"
-
+        <!-- crazy comment -->
         android:id = "1id"
         android:textColor = "lots of color"/>
 
@@ -114,7 +114,7 @@
     android:layout_width = "17"
 
     android:max = "100"
-    android:progress = "5" />
+    android:progress = "10" />
 
 </LinearLayout>
 <!--hello i am a - comment at the end of the file -->
