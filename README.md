@@ -9,6 +9,11 @@ This repository contains a simple XML parser implemented using Flex (the fast le
 - Supports custom error reporting for invalid input.
 - Includes a Makefile for building the parser executable.
 
+# Prerequisites
+- Flex 2.5.35 or higher
+- Bison 2.4.1 or higher
+- GCC (GNU Compiler Collection) or any C compiler
+
 # Getting Started
 1. Clone the repository.
 2. Change into the cloned directory.
