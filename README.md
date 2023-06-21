@@ -19,6 +19,6 @@ make
 ```
 4. Run the parser with an input file:
 ```
-./xml_parser input.xml
+./xml_parser test_file.xml
 ```
 Replace input.xml with the path to your XML input file.
