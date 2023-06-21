@@ -2,7 +2,7 @@
 This repository contains a simple XML parser implemented using Flex (the fast lexical analyzer) and Bison (the GNU parser generator). The parser is designed to parse an XML-like language and perform various validations on the structure and attributes of the XML elements.
 
 # Features
-- Parses XML-like language using Flex and Bison.\n
+- Parses XML-like language using Flex and Bison.
 - Validates the structure and attributes of XML elements.
 - Handles mandatory and optional attributes.
 - Performs checks on numeric attribute values.
