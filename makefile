@@ -1,6 +1,6 @@
 all:
-	flex -l lexer.l
 	bison -d parser.y 
+	flex -l lexer.l
 	gcc lex.yy.c parser.tab.c -o xml_parser
 
 clean:
