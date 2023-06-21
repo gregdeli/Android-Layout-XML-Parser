@@ -21,4 +21,3 @@ make
 ```
 ./xml_parser test_file.xml
 ```
-Replace input.xml with the path to your XML input file.
